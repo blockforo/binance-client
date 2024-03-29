@@ -726,28 +726,46 @@ func (s *TickerPrice) Symbols(symbols []string) *TickerPrice {
 }
 
 // Send the request
-func (s *TickerPrice) Do(ctx context.Context, opts ...RequestOption) (res *TickerPriceResponse, err error) {
+func (s *TickerPrice) Do(ctx context.Context, opts ...RequestOption) ([]*TickerPriceResponse, error) {
+	// Build the request
 	r := &request{
 		method:   http.MethodGet,
 		endpoint: "/api/v3/ticker/price",
 		secType:  secTypeNone,
 	}
+	// Binance returns a single object in case of 1 symbol
+	isArrayResponse := false
 	if s.symbol != nil {
 		r.setParam("symbol", *s.symbol)
 	}
+
+	// otherwise returns an array
 	if s.symbols != nil {
+		isArrayResponse = true
 		r.setParam("symbols", *s.symbols)
 	}
+
+	// Make the API call
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return nil, err
 	}
-	res = new(TickerPriceResponse)
-	err = json.Unmarshal(data, res)
-	if err != nil {
-		return nil, err
+
+	// Parse
+	var prices []*TickerPriceResponse
+
+	// If it's an array response, we are good
+	if isArrayResponse {
+		err = json.Unmarshal(data, &prices)
+	} else {
+		// Otherwise parse a single object and add it to the array
+		var price TickerPriceResponse
+		err = json.Unmarshal(data, &price)
+		if err != nil {
+			prices = append(prices, &price)
+		}
 	}
-	return res, nil
+	return prices, err
 }
 
 // Define TickerPrice response data
