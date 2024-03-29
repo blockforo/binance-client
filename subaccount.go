@@ -1487,12 +1487,12 @@ func (s *QueryUniversalTransferHistoryService) Do(ctx context.Context, opts ...R
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
-		return
+		return res, err
 	}
 	res.Result = make([]*InternalUniversalTransfer, 0)
 	err = json.Unmarshal(data, &res)
 	if err != nil {
-		return
+		return res, err
 	}
 	return res, nil
 }
@@ -2105,7 +2105,7 @@ type QueryManagedSubAccountAssetDetailsResp struct {
 	} `json:"assetDetail"`
 }
 
-// Withdrawl Assets From The Managed Sub-account（For Investor Master Account）
+// Withdrawal Assets From The Managed Sub-account（For Investor Master Account）
 
 const (
 	withdrawAssetsFromTheManagedSubAccountEndpoint = "/sapi/v1/sub-account/managed-subaccount/withdraw"

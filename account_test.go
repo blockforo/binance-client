@@ -8,6 +8,13 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+const (
+	LTCBTC = "LTCBTC"
+	BNBBTC = "BNBBTC"
+	USDT   = "USDT"
+	BTC    = "BTC"
+)
+
 type accountTestSuite struct {
 	baseTestSuite
 }
@@ -64,7 +71,7 @@ func (s *accountTestSuite) TestGetAccountInfo() {
 		AccountType:      "SPOT",
 		Balances: []Balance{
 			{
-				Asset:  "BTC",
+				Asset:  BTC,
 				Free:   "4723846.89208129",
 				Locked: "0.00000000",
 			},
@@ -117,7 +124,7 @@ func (s *accountTestSuite) TestGetMyTrades() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	symbol := "BNBBTC"
+	symbol := BNBBTC
 	limit := 3
 	fromID := int64(1)
 	startTime := uint64(1499865549590)
@@ -141,7 +148,7 @@ func (s *accountTestSuite) TestGetMyTrades() {
 	r.Len(trades, 1)
 	e := &AccountTradeListResponse{
 		Id:              28457,
-		Symbol:          "BNBBTC",
+		Symbol:          BNBBTC,
 		OrderId:         12345,
 		OrderListId:     -1,
 		Price:           "4.00000100",
@@ -197,7 +204,7 @@ func (s *accountTestSuite) TestNewOrder() {
 
 	symbol := "BTCUSDT"
 	side := "SELL"
-	orderType := "MARKET"
+	orderType := MARKET
 	quantity := 10.0
 	clientOrderId := "6gCrw2kRUAF9CvJDGP16IP"
 	respType := "RESULT"
@@ -220,7 +227,7 @@ func (s *accountTestSuite) TestNewOrder() {
 	orderResp, err := s.client.NewCreateOrderService().Symbol(symbol).
 		Side(side).Type(orderType).
 		Quantity(quantity).
-		NewClientOrderId(clientOrderId).
+		NewClientOrderID(clientOrderId).
 		NewOrderRespType(respType).
 		Do(newContext())
 
@@ -230,9 +237,9 @@ func (s *accountTestSuite) TestNewOrder() {
 
 	expectedResp := &CreateOrderResponseRESULT{
 		Symbol:                  "BTCUSDT",
-		OrderId:                 28,
-		OrderListId:             -1,
-		ClientOrderId:           "6gCrw2kRUAF9CvJDGP16IP",
+		OrderID:                 28,
+		OrderListID:             -1,
+		ClientOrderID:           "6gCrw2kRUAF9CvJDGP16IP",
 		TransactTime:            1507725176595,
 		Price:                   "0.00000000",
 		OrigQty:                 "10.00000000",
@@ -240,7 +247,7 @@ func (s *accountTestSuite) TestNewOrder() {
 		CumulativeQuoteQty:      "10.00000000",
 		Status:                  "FILLED",
 		TimeInForce:             "GTC",
-		Type:                    "MARKET",
+		Type:                    MARKET,
 		Side:                    "SELL",
 		WorkingTime:             1507725176595,
 		SelfTradePreventionMode: "NONE",
@@ -252,9 +259,9 @@ func (s *accountTestSuite) TestNewOrder() {
 func (s *baseTestSuite) assertCreateOrderResponseEqual(e, a *CreateOrderResponseRESULT) {
 	r := s.r()
 	r.Equal(e.Symbol, a.Symbol, "Symbol")
-	r.Equal(e.OrderId, a.OrderId, "OrderId")
-	r.Equal(e.OrderListId, a.OrderListId, "OrderListId")
-	r.Equal(e.ClientOrderId, a.ClientOrderId, "ClientOrderId")
+	r.Equal(e.OrderID, a.OrderID, "OrderId")
+	r.Equal(e.OrderListID, a.OrderListID, "OrderListId")
+	r.Equal(e.ClientOrderID, a.ClientOrderID, "ClientOrderId")
 	r.Equal(e.TransactTime, a.TransactTime, "TransactTime")
 	r.Equal(e.Price, a.Price, "Price")
 	r.Equal(e.OrigQty, a.OrigQty, "OrigQty")
@@ -297,15 +304,15 @@ func (s *accountTestSuite) TestCancelOrder() {
 		s.assertRequestEqual(e, r)
 	})
 	ctx := context.Background()
-	res, err := s.client.NewCancelOrderService().Symbol("BTCUSDT").OrigClientOrderId("my_order_id_123").NewClientOrderId("cancel_order_id_456").Do(ctx)
+	res, err := s.client.NewCancelOrderService().Symbol("BTCUSDT").OrigClientOrderID("my_order_id_123").NewClientOrderID("cancel_order_id_456").Do(ctx)
 	s.r().NoError(err)
 
 	e := &CancelOrderResponse{
 		Symbol:              "BTCUSDT",
-		OrigClientOrderId:   "my_order_id_123",
-		OrderId:             123456789,
-		OrderListId:         10,
-		ClientOrderId:       "cancel_order_id_456",
+		OrigClientOrderID:   "my_order_id_123",
+		OrderID:             123456789,
+		OrderListID:         10,
+		ClientOrderID:       "cancel_order_id_456",
 		Price:               "0.001",
 		OrigQty:             "1.00000000",
 		ExecutedQty:         "0.00000000",
@@ -322,10 +329,10 @@ func (s *accountTestSuite) TestCancelOrder() {
 func (s *accountTestSuite) assertCancelOrderEqual(e, a *CancelOrderResponse) {
 	r := s.r()
 	r.Equal(e.Symbol, a.Symbol, "Symbol")
-	r.Equal(e.OrigClientOrderId, a.OrigClientOrderId, "OrigClientOrderId")
-	r.Equal(e.OrderId, a.OrderId, "OrderId")
-	r.Equal(e.OrderListId, a.OrderListId, "OrderListId")
-	r.Equal(e.ClientOrderId, a.ClientOrderId, "ClientOrderId")
+	r.Equal(e.OrigClientOrderID, a.OrigClientOrderID, "OrigClientOrderID")
+	r.Equal(e.OrderID, a.OrderID, "OrderID")
+	r.Equal(e.OrderListID, a.OrderListID, "OrderListId")
+	r.Equal(e.ClientOrderID, a.ClientOrderID, "ClientOrderId")
 	r.Equal(e.Price, a.Price, "Price")
 	r.Equal(e.OrigQty, a.OrigQty, "OrigQty")
 	r.Equal(e.ExecutedQty, a.ExecutedQty, "ExecutedQty")
@@ -576,14 +583,14 @@ func (s *accountTestSuite) TestQueryAllOCOService() {
 	s.r().Equal("hG7hFNxJV6cZy3Ze4AUT4d", resp[1].ListClientOrderId)
 	s.r().Equal(uint64(1565245913483), resp[0].TransactionTime)
 	s.r().Equal(uint64(1565245913407), resp[1].TransactionTime)
-	s.r().Equal("LTCBTC", resp[0].Symbol)
-	s.r().Equal("LTCBTC", resp[1].Symbol)
+	s.r().Equal(LTCBTC, resp[0].Symbol)
+	s.r().Equal(LTCBTC, resp[1].Symbol)
 	s.r().Equal(2, len(resp[0].Orders))
 	s.r().Equal(2, len(resp[1].Orders))
-	s.r().Equal("LTCBTC", resp[0].Orders[0].Symbol)
-	s.r().Equal("LTCBTC", resp[0].Orders[1].Symbol)
-	s.r().Equal("LTCBTC", resp[1].Orders[0].Symbol)
-	s.r().Equal("LTCBTC", resp[1].Orders[1].Symbol)
+	s.r().Equal(LTCBTC, resp[0].Orders[0].Symbol)
+	s.r().Equal(LTCBTC, resp[0].Orders[1].Symbol)
+	s.r().Equal(LTCBTC, resp[1].Orders[0].Symbol)
+	s.r().Equal(LTCBTC, resp[1].Orders[1].Symbol)
 	s.r().Equal(int64(4), resp[0].Orders[0].OrderId)
 	s.r().Equal(int64(5), resp[0].Orders[1].OrderId)
 	s.r().Equal(int64(2), resp[1].Orders[0].OrderId)
@@ -760,10 +767,10 @@ func (s *accountTestSuite) TestCancelOpenOrders() {
 	s.r().NoError(err)
 	s.Len(res, 2)
 	s.Equal("BTCUSDT", res[0].Symbol)
-	s.Equal("1uL7mdU6TlTzTqTddTfNhV", res[0].OrigClientOrderId)
-	s.Equal(int64(123456), res[0].OrderId)
-	s.Equal(int64(-1), res[0].OrderListId)
-	s.Equal("pXLV6Hz6mprAcVYpLkd1KH", res[0].ClientOrderId)
+	s.Equal("1uL7mdU6TlTzTqTddTfNhV", res[0].OrigClientOrderID)
+	s.Equal(int64(123456), res[0].OrderID)
+	s.Equal(int64(-1), res[0].OrderListID)
+	s.Equal("pXLV6Hz6mprAcVYpLkd1KH", res[0].ClientOrderID)
 	s.Equal("0.00000000", res[0].Price)
 	s.Equal("1.00000000", res[0].OrigQty)
 	s.Equal("0.00000000", res[0].ExecutedQty)
@@ -775,10 +782,10 @@ func (s *accountTestSuite) TestCancelOpenOrders() {
 	s.Equal("DECREASE_AND_CANCEL", res[0].SelfTradePrevention)
 
 	s.Equal("ETHUSDT", res[1].Symbol)
-	s.Equal("2uL7mdU6TlTzTqTddTfNhV", res[1].OrigClientOrderId)
-	s.Equal(int64(123457), res[1].OrderId)
-	s.Equal(int64(-1), res[1].OrderListId)
-	s.Equal("qXLV6Hz6mprAcVYpLkd1KH", res[1].ClientOrderId)
+	s.Equal("2uL7mdU6TlTzTqTddTfNhV", res[1].OrigClientOrderID)
+	s.Equal(int64(123457), res[1].OrderID)
+	s.Equal(int64(-1), res[1].OrderListID)
+	s.Equal("qXLV6Hz6mprAcVYpLkd1KH", res[1].ClientOrderID)
 	s.Equal("0.00000000", res[1].Price)
 	s.Equal("2.00000000", res[1].OrigQty)
 	s.Equal("0.00000000", res[1].ExecutedQty)

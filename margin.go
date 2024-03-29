@@ -2123,7 +2123,7 @@ type MarginAccountQueryAllOCOService struct {
 	c          *Client
 	isIsolated *string
 	symbol     *string
-	fromId     *int
+	fromID     *int
 	startTime  *uint64
 	endTime    *uint64
 	limit      *int
@@ -2141,9 +2141,9 @@ func (s *MarginAccountQueryAllOCOService) Symbol(symbol string) *MarginAccountQu
 	return s
 }
 
-// FromId set fromId
-func (s *MarginAccountQueryAllOCOService) FromId(fromId int) *MarginAccountQueryAllOCOService {
-	s.fromId = &fromId
+// FromId set fromID
+func (s *MarginAccountQueryAllOCOService) FromId(fromID int) *MarginAccountQueryAllOCOService {
+	s.fromID = &fromID
 	return s
 }
 
@@ -2178,8 +2178,8 @@ func (s *MarginAccountQueryAllOCOService) Do(ctx context.Context, opts ...Reques
 	if s.symbol != nil {
 		r.setParam("symbol", *s.symbol)
 	}
-	if s.fromId != nil {
-		r.setParam("fromId", *s.fromId)
+	if s.fromID != nil {
+		r.setParam("fromID", *s.fromID)
 	}
 	if s.startTime != nil {
 		r.setParam("startTime", *s.startTime)
@@ -2296,7 +2296,7 @@ type MarginAccountQueryTradeListService struct {
 	orderId    *int
 	startTime  *uint64
 	endTime    *uint64
-	fromId     *int
+	fromID     *int
 	limit      *int
 }
 
@@ -2330,9 +2330,9 @@ func (s *MarginAccountQueryTradeListService) EndTime(endTime uint64) *MarginAcco
 	return s
 }
 
-// FromId set fromId
-func (s *MarginAccountQueryTradeListService) FromId(fromId int) *MarginAccountQueryTradeListService {
-	s.fromId = &fromId
+// FromId set fromID
+func (s *MarginAccountQueryTradeListService) FromId(fromID int) *MarginAccountQueryTradeListService {
+	s.fromID = &fromID
 	return s
 }
 
@@ -2364,8 +2364,8 @@ func (s *MarginAccountQueryTradeListService) Do(ctx context.Context, opts ...Req
 	if s.endTime != nil {
 		m["endTime"] = *s.endTime
 	}
-	if s.fromId != nil {
-		m["fromId"] = *s.fromId
+	if s.fromID != nil {
+		m["fromId"] = *s.fromID
 	}
 	if s.limit != nil {
 		m["limit"] = *s.limit
@@ -3512,10 +3512,10 @@ type MarginDustlogResponse struct {
 // UserAssetDribblet represents one dust log row
 type UserAssetDribblet struct {
 	OperateTime              int64                     `json:"operateTime"`
-	TotalTransferedAmount    string                    `json:"totalTransferedAmount"`    //Total transfered BNB amount for this exchange.
-	TotalServiceChargeAmount string                    `json:"totalServiceChargeAmount"` //Total service charge amount for this exchange.
+	TotalTransferedAmount    string                    `json:"totalTransferedAmount"`    // Total transfered BNB amount for this exchange.
+	TotalServiceChargeAmount string                    `json:"totalServiceChargeAmount"` // Total service charge amount for this exchange.
 	TransId                  int64                     `json:"transId"`
-	UserAssetDribbletDetails []UserAssetDribbletDetail `json:"userAssetDribbletDetails"` //Details of this exchange.
+	UserAssetDribbletDetails []UserAssetDribbletDetail `json:"userAssetDribbletDetails"` // Details of this exchange.
 }
 
 // DustLog represents one dust log informations
@@ -3523,7 +3523,7 @@ type UserAssetDribbletDetail struct {
 	TransId             int    `json:"transId"`
 	ServiceChargeAmount string `json:"serviceChargeAmount"`
 	Amount              string `json:"amount"`
-	OperateTime         int64  `json:"operateTime"` //The time of this exchange.
+	OperateTime         int64  `json:"operateTime"` // The time of this exchange.
 	TransferedAmount    string `json:"transferedAmount"`
 	FromAsset           string `json:"fromAsset"`
 }

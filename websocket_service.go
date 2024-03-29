@@ -139,7 +139,6 @@ func (c *WebsocketStreamClient) WsCombinedPartialDepthServe(symbolLevels map[str
 		asksLen := len(data["asks"].([]interface{}))
 		event.Asks = make([]Ask, asksLen)
 		for i := 0; i < asksLen; i++ {
-
 			item := data["asks"].([]interface{})[i].([]interface{})
 			event.Asks[i] = Ask{
 				Price:    item[0].(string),
@@ -262,7 +261,6 @@ func wsCombinedDepthServe(endpoint string, handler WsDepthHandler, errHandler Er
 		asksLen := len(data["a"].([]interface{}))
 		event.Asks = make([]Ask, asksLen)
 		for i := 0; i < asksLen; i++ {
-
 			item := data["a"].([]interface{})[i].([]interface{})
 			event.Asks[i] = Ask{
 				Price:    item[0].(string),
@@ -544,7 +542,7 @@ type WsOrderUpdate struct {
 	LatestQuoteVolume       string          `json:"Y"` // the quote volume for the latest trade
 	QuoteVolume             string          `json:"Q"`
 	TrailingTime            int64           `json:"D"` // Trailing Time
-	StrategyId              int64           `json:"j"` // Strategy ID
+	StrategyID              int64           `json:"j"` // Strategy ID
 	StrategyType            int64           `json:"J"` // Strategy Type
 	WorkingTime             int64           `json:"W"` // Working Time
 	SelfTradePreventionMode string          `json:"V"`

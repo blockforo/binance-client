@@ -22,7 +22,7 @@ func CancelReplaceOrderExample() {
 	defer client.Close()
 
 	response, err := client.NewCancelReplaceOrderService().Symbol("BTCUSDT").CancelReplaceMode("STOP_ON_FAILURE").
-		Side("BUY").OrderType("MARKET").CancelOrderId(123123132).Do(context.Background())
+		Side("BUY").OrderType("MARKET").CancelOrderID(123123132).Do(context.Background())
 	if err != nil {
 		log.Printf("Error: %v", err)
 		return

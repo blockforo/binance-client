@@ -77,10 +77,12 @@ func (c *WebsocketAPIClient) Connect() error {
 	}
 	headers := http.Header{}
 	headers.Add("User-Agent", fmt.Sprintf("%s/%s", Name, Version))
-	conn, _, err := c.Dialer.Dial(c.Endpoint, headers)
+	conn, resp, err := c.Dialer.Dial(c.Endpoint, headers)
 	if err != nil {
 		return err
 	}
+
+	defer resp.Body.Close()
 
 	fmt.Println("Connected to Binance Websocket API")
 	c.Conn = conn

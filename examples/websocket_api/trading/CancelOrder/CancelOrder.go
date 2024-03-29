@@ -21,7 +21,7 @@ func CancelOrderExample() {
 	}
 	defer client.Close()
 
-	response, err := client.NewCancelOrderService().Symbol("BTCUSDT").OrderId(123123123).Do(context.Background())
+	response, err := client.NewCancelOrderService().Symbol("BTCUSDT").OrderID(123123123).Do(context.Background())
 	if err != nil {
 		log.Printf("Error: %v", err)
 		return

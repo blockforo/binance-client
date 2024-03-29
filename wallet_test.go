@@ -24,7 +24,7 @@ func (s *walletTestSuite) TestCreateWithdraw() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	coin := "USDT"
+	coin := USDT
 	withdrawOrderID := "testID"
 	network := "ETH"
 	address := "myaddress"
@@ -162,10 +162,10 @@ func (s *walletTestSuite) TestUserUniversalTransfer() {
 	defer s.assertDo()
 
 	types := "MAIN_C2C"
-	asset := "USDT"
+	asset := USDT
 	amount := 0.1
-	fromSymbol := "USDT"
-	toSymbol := "USDT"
+	fromSymbol := USDT
+	toSymbol := USDT
 
 	s.assertReq(func(r *request) {
 		e := newSignedRequest().setParams(params{
@@ -202,7 +202,7 @@ func (s *walletTestSuite) TestBusdConvert() {
 	defer s.assertDo()
 
 	clientTranId := "X7612JSNTO8274HXUQJ2"
-	asset := "USDT"
+	asset := USDT
 	amount := float64(20)
 	targetAsset := "BUSD"
 
@@ -485,10 +485,10 @@ func (s *walletTestSuite) TestAutoConvertStableCoin() {
 	s.True(resp.ConvertEnabled)
 	s.Len(resp.Coins, 2)
 	s.Equal("BUSD", resp.Coins[0].Asset)
-	s.Equal("USDT", resp.Coins[1].Asset)
+	s.Equal(USDT, resp.Coins[1].Asset)
 	s.Len(resp.ExchangeRates, 2)
 	s.Equal("BUSD", resp.ExchangeRates[0].Asset)
-	s.Equal("USDT", resp.ExchangeRates[1].Asset)
+	s.Equal(USDT, resp.ExchangeRates[1].Asset)
 }
 
 func (s *walletTestSuite) TestBUSDConvertHistory() {

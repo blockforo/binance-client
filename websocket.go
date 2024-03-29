@@ -96,7 +96,7 @@ var wsServe = func(cfg *WsConfig, handler WsHandler, errHandler ErrHandler) (don
 			handler(message)
 		}
 	}()
-	return
+	return doneCh, stopCh, err
 }
 
 func keepAlive(c *websocket.Conn, timeout time.Duration) {

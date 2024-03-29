@@ -19,7 +19,7 @@ linters-settings:
     local-prefixes: github.com/golangci/golangci-lint
 
   govet:
-    check-shadowing: true
+    shadow: true
     settings:
       printf:
         funcs:
@@ -29,10 +29,14 @@ linters-settings:
           - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
   lll:
     line-length: 140
-  misspell:
-    locale: US
+  # misspell:
+  #   locale: UK
 
 linters:
+  maligned:
+    # Print struct with more effective memory layout or not.
+    # Default: false
+    suggest-new: true
   disable-all: true
   enable:
     - bodyclose
@@ -54,7 +58,7 @@ linters:
     - noctx
     - nolintlint
     - staticcheck
-    - stylecheck
+    # - stylecheck
     - typecheck
     - unconvert
     - unparam

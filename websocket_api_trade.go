@@ -15,12 +15,12 @@ type OrderPlacementService struct {
 	price                   *float64
 	quantity                *float64
 	quoteOrderQty           *float64
-	newClientOrderId        *string
+	newClientOrderID        *string
 	newOrderRespType        *string
 	stopPrice               *float64
 	trailingDelta           *int64
 	icebergQty              *float64
-	strategyId              *int
+	strategyID              *int
 	strategyType            *int
 	selfTradePreventionMode *string
 	recvWindow              *int64
@@ -61,8 +61,8 @@ func (s *OrderPlacementService) QuoteOrderQty(quoteOrderQty float64) *OrderPlace
 	return s
 }
 
-func (s *OrderPlacementService) NewClientOrderId(newClientOrderId string) *OrderPlacementService {
-	s.newClientOrderId = &newClientOrderId
+func (s *OrderPlacementService) NewClientOrderID(newClientOrderID string) *OrderPlacementService {
+	s.newClientOrderID = &newClientOrderID
 	return s
 }
 
@@ -86,8 +86,8 @@ func (s *OrderPlacementService) IcebergQty(icebergQty float64) *OrderPlacementSe
 	return s
 }
 
-func (s *OrderPlacementService) StrategyId(strategyId int) *OrderPlacementService {
-	s.strategyId = &strategyId
+func (s *OrderPlacementService) StrategyID(strategyID int) *OrderPlacementService {
+	s.strategyID = &strategyID
 	return s
 }
 
@@ -125,8 +125,8 @@ func (s *OrderPlacementService) Do(ctx context.Context) (*OrderPlacementResponse
 	if s.quoteOrderQty != nil {
 		parameters["quoteOrderQty"] = strconv.FormatFloat(*s.quoteOrderQty, 'f', -1, 64)
 	}
-	if s.newClientOrderId != nil {
-		parameters["newClientOrderId"] = *s.newClientOrderId
+	if s.newClientOrderID != nil {
+		parameters["newClientOrderId"] = *s.newClientOrderID
 	}
 	if s.newOrderRespType != nil {
 		parameters["newOrderRespType"] = *s.newOrderRespType
@@ -140,8 +140,8 @@ func (s *OrderPlacementService) Do(ctx context.Context) (*OrderPlacementResponse
 	if s.icebergQty != nil {
 		parameters["icebergQty"] = strconv.FormatFloat(*s.icebergQty, 'f', -1, 64)
 	}
-	if s.strategyId != nil {
-		parameters["strategyId"] = strconv.Itoa(*s.strategyId)
+	if s.strategyID != nil {
+		parameters["strategyId"] = strconv.Itoa(*s.strategyID)
 	}
 	if s.strategyType != nil {
 		parameters["strategyType"] = strconv.Itoa(*s.strategyType)
@@ -213,10 +213,10 @@ type OrderPlacementResult struct {
 	Side                string      `json:"side,omitempty"`
 	WorkingTime         int64       `json:"workingTime,omitempty"`
 	IcebergQty          string      `json:"icebergQty,omitempty"`
-	PreventedMatchId    int64       `json:"preventedMatchId,omitempty"`
+	PreventedMatchID    int64       `json:"preventedMatchId,omitempty"`
 	PreventedQuantity   string      `json:"preventedQuantity,omitempty"`
 	StopPrice           string      `json:"stopPrice,omitempty"`
-	StrategyId          int64       `json:"strategyId,omitempty"`
+	StrategyID          int64       `json:"strategyId,omitempty"`
 	StrategyType        int64       `json:"strategyType,omitempty"`
 	TrailingDelta       string      `json:"trailingDelta,omitempty"`
 	TrailingTime        int64       `json:"trailingTime,omitempty"`
@@ -241,12 +241,12 @@ type TestOrderPlacementService struct {
 	price                   *float64
 	quantity                *float64
 	quoteOrderQty           *float64
-	newClientOrderId        *string
+	newClientOrderID        *string
 	newOrderRespType        *string
 	stopPrice               *float64
 	trailingDelta           *int64
 	icebergQty              *float64
-	strategyId              *int
+	strategyID              *int
 	strategyType            *int
 	selfTradePreventionMode *string
 	recvWindow              *int64
@@ -287,8 +287,8 @@ func (s *TestOrderPlacementService) QuoteOrderQty(quoteOrderQty float64) *TestOr
 	return s
 }
 
-func (s *TestOrderPlacementService) NewClientOrderId(newClientOrderId string) *TestOrderPlacementService {
-	s.newClientOrderId = &newClientOrderId
+func (s *TestOrderPlacementService) NewClientOrderID(newClientOrderID string) *TestOrderPlacementService {
+	s.newClientOrderID = &newClientOrderID
 	return s
 }
 
@@ -312,8 +312,8 @@ func (s *TestOrderPlacementService) IcebergQty(icebergQty float64) *TestOrderPla
 	return s
 }
 
-func (s *TestOrderPlacementService) StrategyId(strategyId int) *TestOrderPlacementService {
-	s.strategyId = &strategyId
+func (s *TestOrderPlacementService) StrategyID(strategyID int) *TestOrderPlacementService {
+	s.strategyID = &strategyID
 	return s
 }
 
@@ -351,8 +351,8 @@ func (s *TestOrderPlacementService) Do(ctx context.Context) (*OrderPlacementResp
 	if s.quoteOrderQty != nil {
 		parameters["quoteOrderQty"] = strconv.FormatFloat(*s.quoteOrderQty, 'f', -1, 64)
 	}
-	if s.newClientOrderId != nil {
-		parameters["newClientOrderId"] = *s.newClientOrderId
+	if s.newClientOrderID != nil {
+		parameters["newClientOrderId"] = *s.newClientOrderID
 	}
 	if s.newOrderRespType != nil {
 		parameters["newOrderRespType"] = *s.newOrderRespType
@@ -366,8 +366,8 @@ func (s *TestOrderPlacementService) Do(ctx context.Context) (*OrderPlacementResp
 	if s.icebergQty != nil {
 		parameters["icebergQty"] = strconv.FormatFloat(*s.icebergQty, 'f', -1, 64)
 	}
-	if s.strategyId != nil {
-		parameters["strategyId"] = strconv.Itoa(*s.strategyId)
+	if s.strategyID != nil {
+		parameters["strategyId"] = strconv.Itoa(*s.strategyID)
 	}
 	if s.strategyType != nil {
 		parameters["strategyType"] = strconv.Itoa(*s.strategyType)
@@ -527,7 +527,7 @@ type OrderStatusResult struct {
 	SelfTradePreventionMode string `json:"selfTradePreventionMode"`
 	PreventedMatchId        int64  `json:"preventedMatchId,omitempty"`
 	PreventedQuantity       string `json:"preventedQuantity,omitempty"`
-	StrategyId              int64  `json:"strategyId,omitempty"`
+	StrategyID              int64  `json:"strategyId,omitempty"`
 	StrategyType            int64  `json:"strategyType,omitempty"`
 	TrailingDelta           string `json:"trailingDelta,omitempty"`
 	TrailingTime            int64  `json:"trailingTime,omitempty"`
@@ -536,9 +536,9 @@ type OrderStatusResult struct {
 type OrderCancelService struct {
 	websocketAPI       *WebsocketAPIClient
 	symbol             string
-	orderId            *int64
-	origClientOrderId  *string
-	newClientOrderId   *string
+	orderID            *int64
+	origClientOrderID  *string
+	newClientOrderID   *string
 	cancelRestrictions *string
 	recvWindow         *int64
 }
@@ -548,18 +548,18 @@ func (s *OrderCancelService) Symbol(symbol string) *OrderCancelService {
 	return s
 }
 
-func (s *OrderCancelService) OrderId(orderId int64) *OrderCancelService {
-	s.orderId = &orderId
+func (s *OrderCancelService) OrderID(orderID int64) *OrderCancelService {
+	s.orderID = &orderID
 	return s
 }
 
-func (s *OrderCancelService) OrigClientOrderId(origClientOrderId string) *OrderCancelService {
-	s.origClientOrderId = &origClientOrderId
+func (s *OrderCancelService) OrigClientOrderID(origClientOrderID string) *OrderCancelService {
+	s.origClientOrderID = &origClientOrderID
 	return s
 }
 
-func (s *OrderCancelService) NewClientOrderId(newClientOrderId string) *OrderCancelService {
-	s.newClientOrderId = &newClientOrderId
+func (s *OrderCancelService) NewClientOrderId(newClientOrderID string) *OrderCancelService {
+	s.newClientOrderID = &newClientOrderID
 	return s
 }
 
@@ -578,16 +578,16 @@ func (s *OrderCancelService) Do(ctx context.Context) (*OrderCancelResponse, erro
 		"symbol": s.symbol,
 	}
 
-	if s.orderId != nil {
-		parameters["orderId"] = strconv.FormatInt(*s.orderId, 10)
+	if s.orderID != nil {
+		parameters["orderId"] = strconv.FormatInt(*s.orderID, 10)
 	}
 
-	if s.origClientOrderId != nil {
-		parameters["origClientOrderId"] = *s.origClientOrderId
+	if s.origClientOrderID != nil {
+		parameters["origClientOrderId"] = *s.origClientOrderID
 	}
 
-	if s.newClientOrderId != nil {
-		parameters["newClientOrderId"] = *s.newClientOrderId
+	if s.newClientOrderID != nil {
+		parameters["newClientOrderId"] = *s.newClientOrderID
 	}
 
 	if s.cancelRestrictions != nil {
@@ -661,7 +661,7 @@ type OrderCancelResult struct {
 	PreventedMatchId        int64  `json:"preventedMatchId,omitempty"`
 	PreventedQuantity       string `json:"preventedQuantity,omitempty"`
 	StopPrice               string `json:"stopPrice,omitempty"`
-	StrategyId              int64  `json:"strategyId,omitempty"`
+	StrategyID              int64  `json:"strategyId,omitempty"`
 	StrategyType            int64  `json:"strategyType,omitempty"`
 	TrailingDelta           string `json:"trailingDelta,omitempty"`
 	TrailingTime            int64  `json:"trailingTime,omitempty"`
@@ -671,21 +671,21 @@ type OrderCancelReplaceService struct {
 	websocketAPI            *WebsocketAPIClient
 	symbol                  string
 	cancelReplaceMode       string
-	cancelOrderId           *int64
-	cancelOrigClientOrderId *string
-	cancelNewClientOrderId  *string
+	cancelOrderID           *int64
+	cancelOrigClientOrderID *string
+	cancelNewClientOrderID  *string
 	side                    string
 	orderType               string
 	timeInForce             *string
 	price                   *float64
 	quantity                *float64
 	quoteOrderQty           *float64
-	newClientOrderId        *string
+	newClientOrderID        *string
 	newOrderRespType        *string
 	stopPrice               *float64
 	trailingDelta           *float64
 	icebergQty              *float64
-	strategyId              *int
+	strategyID              *int
 	strategyType            *int
 	selfTradePreventionMode *string
 	cancelRestrictions      *string
@@ -702,18 +702,18 @@ func (s *OrderCancelReplaceService) CancelReplaceMode(cancelReplaceMode string) 
 	return s
 }
 
-func (s *OrderCancelReplaceService) CancelOrderId(cancelOrderId int64) *OrderCancelReplaceService {
-	s.cancelOrderId = &cancelOrderId
+func (s *OrderCancelReplaceService) CancelOrderID(cancelOrderID int64) *OrderCancelReplaceService {
+	s.cancelOrderID = &cancelOrderID
 	return s
 }
 
-func (s *OrderCancelReplaceService) CancelOrigClientOrderId(cancelOrigClientOrderId string) *OrderCancelReplaceService {
-	s.cancelOrigClientOrderId = &cancelOrigClientOrderId
+func (s *OrderCancelReplaceService) CancelOrigClientOrderId(cancelOrigClientOrderID string) *OrderCancelReplaceService {
+	s.cancelOrigClientOrderID = &cancelOrigClientOrderID
 	return s
 }
 
-func (s *OrderCancelReplaceService) CancelNewClientOrderId(cancelNewClientOrderId string) *OrderCancelReplaceService {
-	s.cancelNewClientOrderId = &cancelNewClientOrderId
+func (s *OrderCancelReplaceService) CancelNewClientOrderId(cancelNewClientOrderID string) *OrderCancelReplaceService {
+	s.cancelNewClientOrderID = &cancelNewClientOrderID
 	return s
 }
 
@@ -747,8 +747,8 @@ func (s *OrderCancelReplaceService) QuoteOrderQty(quoteOrderQty float64) *OrderC
 	return s
 }
 
-func (s *OrderCancelReplaceService) NewClientOrderId(newClientOrderId string) *OrderCancelReplaceService {
-	s.newClientOrderId = &newClientOrderId
+func (s *OrderCancelReplaceService) NewClientOrderId(newClientOrderID string) *OrderCancelReplaceService {
+	s.newClientOrderID = &newClientOrderID
 	return s
 }
 
@@ -772,8 +772,8 @@ func (s *OrderCancelReplaceService) IcebergQty(icebergQty float64) *OrderCancelR
 	return s
 }
 
-func (s *OrderCancelReplaceService) StrategyId(strategyId int) *OrderCancelReplaceService {
-	s.strategyId = &strategyId
+func (s *OrderCancelReplaceService) StrategyID(strategyID int) *OrderCancelReplaceService {
+	s.strategyID = &strategyID
 	return s
 }
 
@@ -805,16 +805,16 @@ func (s *OrderCancelReplaceService) Do(ctx context.Context) (*OrderCancelReplace
 		"type":              s.orderType,
 	}
 
-	if s.cancelOrderId != nil {
-		parameters["cancelOrderId"] = strconv.FormatInt(*s.cancelOrderId, 10)
+	if s.cancelOrderID != nil {
+		parameters["cancelOrderId"] = strconv.FormatInt(*s.cancelOrderID, 10)
 	}
 
-	if s.cancelOrigClientOrderId != nil {
-		parameters["cancelOrigClientOrderId"] = *s.cancelOrigClientOrderId
+	if s.cancelOrigClientOrderID != nil {
+		parameters["cancelOrigClientOrderId"] = *s.cancelOrigClientOrderID
 	}
 
-	if s.cancelNewClientOrderId != nil {
-		parameters["cancelNewClientOrderId"] = *s.cancelNewClientOrderId
+	if s.cancelNewClientOrderID != nil {
+		parameters["cancelNewClientOrderId"] = *s.cancelNewClientOrderID
 	}
 
 	if s.timeInForce != nil {
@@ -833,8 +833,8 @@ func (s *OrderCancelReplaceService) Do(ctx context.Context) (*OrderCancelReplace
 		parameters["quoteOrderQty"] = strconv.FormatFloat(*s.quoteOrderQty, 'f', -1, 64)
 	}
 
-	if s.newClientOrderId != nil {
-		parameters["newClientOrderId"] = *s.newClientOrderId
+	if s.newClientOrderID != nil {
+		parameters["newClientOrderId"] = *s.newClientOrderID
 	}
 
 	if s.newOrderRespType != nil {
@@ -853,8 +853,8 @@ func (s *OrderCancelReplaceService) Do(ctx context.Context) (*OrderCancelReplace
 		parameters["icebergQty"] = strconv.FormatFloat(*s.icebergQty, 'f', -1, 64)
 	}
 
-	if s.strategyId != nil {
-		parameters["strategyId"] = strconv.Itoa(*s.strategyId)
+	if s.strategyID != nil {
+		parameters["strategyId"] = strconv.Itoa(*s.strategyID)
 	}
 
 	if s.strategyType != nil {
@@ -1133,10 +1133,10 @@ type OpenOrdersCancelAllResponse struct {
 
 type OpenOrdersCancelResult struct {
 	Symbol                  string `json:"symbol"`
-	OrigClientOrderId       string `json:"origClientOrderId"`
+	OrigClientOrderID       string `json:"origClientOrderId"`
 	OrderId                 int64  `json:"orderId"`
-	OrderListId             int    `json:"orderListId"`
-	ClientOrderId           string `json:"clientOrderId"`
+	OrderListID             int    `json:"orderListId"`
+	ClientOrderID           string `json:"clientOrderId"`
 	Price                   string `json:"price"`
 	OrigQty                 string `json:"origQty"`
 	ExecutedQty             string `json:"executedQty"`
@@ -1147,7 +1147,7 @@ type OpenOrdersCancelResult struct {
 	Side                    string `json:"side"`
 	StopPrice               string `json:"stopPrice"`
 	IcebergQty              string `json:"icebergQty"`
-	StrategyId              int64  `json:"strategyId"`
+	StrategyID              int64  `json:"strategyId"`
 	StrategyType            int64  `json:"strategyType"`
 	SelfTradePreventionMode string `json:"selfTradePreventionMode"`
 }
@@ -1158,18 +1158,18 @@ type OrderListPlaceService struct {
 	side                    string
 	price                   float64
 	quantity                float64
-	listClientOrderId       *string
-	limitClientOrderId      *string
+	listClientOrderID       *string
+	limitClientOrderID      *string
 	limitIcebergQty         *float64
-	limitStrategyId         *int
+	limitStrategyID         *int
 	limitStrategyType       *int
 	stopPrice               *float64
 	trailingDelta           *float64
-	stopClientOrderId       *string
+	stopClientOrderID       *string
 	stopLimitPrice          *float64
 	stopLimitTimeInForce    *string
 	stopIcebergQty          *float64
-	stopStrategyId          *int
+	stopStrategyID          *int
 	stopStrategyType        *int
 	newOrderRespType        *string
 	selfTradePreventionMode *string
@@ -1196,13 +1196,13 @@ func (s *OrderListPlaceService) Quantity(quantity float64) *OrderListPlaceServic
 	return s
 }
 
-func (s *OrderListPlaceService) ListClientOrderId(listClientOrderId string) *OrderListPlaceService {
-	s.listClientOrderId = &listClientOrderId
+func (s *OrderListPlaceService) ListClientOrderId(listClientOrderID string) *OrderListPlaceService {
+	s.listClientOrderID = &listClientOrderID
 	return s
 }
 
-func (s *OrderListPlaceService) LimitClientOrderId(limitClientOrderId string) *OrderListPlaceService {
-	s.limitClientOrderId = &limitClientOrderId
+func (s *OrderListPlaceService) LimitClientOrderID(limitClientOrderID string) *OrderListPlaceService {
+	s.limitClientOrderID = &limitClientOrderID
 	return s
 }
 
@@ -1211,8 +1211,8 @@ func (s *OrderListPlaceService) LimitIcebergQty(limitIcebergQty float64) *OrderL
 	return s
 }
 
-func (s *OrderListPlaceService) LimitStrategyId(limitStrategyId int) *OrderListPlaceService {
-	s.limitStrategyId = &limitStrategyId
+func (s *OrderListPlaceService) LimitStrategyID(limitStrategyID int) *OrderListPlaceService {
+	s.limitStrategyID = &limitStrategyID
 	return s
 }
 
@@ -1226,8 +1226,8 @@ func (s *OrderListPlaceService) StopPrice(stopPrice float64) *OrderListPlaceServ
 	return s
 }
 
-func (s *OrderListPlaceService) StopClientOrderId(stopClientOrderId string) *OrderListPlaceService {
-	s.stopClientOrderId = &stopClientOrderId
+func (s *OrderListPlaceService) StopClientOrderID(stopClientOrderID string) *OrderListPlaceService {
+	s.stopClientOrderID = &stopClientOrderID
 	return s
 }
 
@@ -1246,8 +1246,8 @@ func (s *OrderListPlaceService) StopIcebergQty(stopIcebergQty float64) *OrderLis
 	return s
 }
 
-func (s *OrderListPlaceService) StopStrategyId(stopStrategyId int) *OrderListPlaceService {
-	s.stopStrategyId = &stopStrategyId
+func (s *OrderListPlaceService) StopStrategyID(stopStrategyID int) *OrderListPlaceService {
+	s.stopStrategyID = &stopStrategyID
 	return s
 }
 
@@ -1279,20 +1279,20 @@ func (s *OrderListPlaceService) Do(ctx context.Context) (*OrderListPlaceResponse
 		"quantity": strconv.FormatFloat(s.quantity, 'f', -1, 64),
 	}
 
-	if s.listClientOrderId != nil {
-		parameters["listClientOrderId"] = *s.listClientOrderId
+	if s.listClientOrderID != nil {
+		parameters["listClientOrderId"] = *s.listClientOrderID
 	}
 
-	if s.limitClientOrderId != nil {
-		parameters["limitClientOrderId"] = *s.limitClientOrderId
+	if s.limitClientOrderID != nil {
+		parameters["limitClientOrderId"] = *s.limitClientOrderID
 	}
 
 	if s.limitIcebergQty != nil {
 		parameters["limitIcebergQty"] = strconv.FormatFloat(*s.limitIcebergQty, 'f', -1, 64)
 	}
 
-	if s.limitStrategyId != nil {
-		strconv.Itoa(*s.limitStrategyId)
+	if s.limitStrategyID != nil {
+		strconv.Itoa(*s.limitStrategyID)
 	}
 
 	if s.limitStrategyType != nil {
@@ -1307,8 +1307,8 @@ func (s *OrderListPlaceService) Do(ctx context.Context) (*OrderListPlaceResponse
 		parameters["trailingDelta"] = strconv.FormatFloat(*s.trailingDelta, 'f', -1, 64)
 	}
 
-	if s.stopClientOrderId != nil {
-		parameters["stopClientOrderId"] = *s.stopClientOrderId
+	if s.stopClientOrderID != nil {
+		parameters["stopClientOrderId"] = *s.stopClientOrderID
 	}
 
 	if s.stopLimitPrice != nil {
@@ -1323,8 +1323,8 @@ func (s *OrderListPlaceService) Do(ctx context.Context) (*OrderListPlaceResponse
 		parameters["stopIcebergQty"] = strconv.FormatFloat(*s.stopIcebergQty, 'f', -1, 64)
 	}
 
-	if s.stopStrategyId != nil {
-		parameters["stopStrategyId"] = strconv.Itoa(*s.stopStrategyId)
+	if s.stopStrategyID != nil {
+		parameters["stopStrategyId"] = strconv.Itoa(*s.stopStrategyID)
 	}
 
 	if s.stopStrategyType != nil {

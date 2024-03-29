@@ -153,7 +153,7 @@ type HistoricalTradesService struct {
 	websocketAPI *WebsocketAPIClient
 	symbol       string
 	limit        *int
-	fromId       *int64
+	fromID       *int64
 }
 
 func (s *HistoricalTradesService) Symbol(symbol string) *HistoricalTradesService {
@@ -166,8 +166,8 @@ func (s *HistoricalTradesService) Limit(limit int) *HistoricalTradesService {
 	return s
 }
 
-func (s *HistoricalTradesService) FromId(fromId int64) *HistoricalTradesService {
-	s.fromId = &fromId
+func (s *HistoricalTradesService) FromID(fromID int64) *HistoricalTradesService {
+	s.fromID = &fromID
 	return s
 }
 
@@ -181,8 +181,8 @@ func (s *HistoricalTradesService) Do(ctx context.Context) (*HistoricalTradesResp
 		parameters["limit"] = s.limit
 	}
 
-	if s.fromId != nil {
-		parameters["fromId"] = s.fromId
+	if s.fromID != nil {
+		parameters["fromId"] = s.fromID
 	}
 
 	id := getUUID()
@@ -237,7 +237,7 @@ type HistoricalTradeData struct {
 type AggregateTradesService struct {
 	websocketAPI *WebsocketAPIClient
 	symbol       string
-	fromId       *int64
+	fromID       *int64
 	startTime    *uint64
 	endTime      *uint64
 	limit        *int
@@ -248,8 +248,8 @@ func (s *AggregateTradesService) Symbol(symbol string) *AggregateTradesService {
 	return s
 }
 
-func (s *AggregateTradesService) FromId(fromId int64) *AggregateTradesService {
-	s.fromId = &fromId
+func (s *AggregateTradesService) FromID(fromID int64) *AggregateTradesService {
+	s.fromID = &fromID
 	return s
 }
 
@@ -273,8 +273,8 @@ func (s *AggregateTradesService) Do(ctx context.Context) (*AggregateTradesRespon
 		"symbol": s.symbol,
 	}
 
-	if s.fromId != nil {
-		parameters["fromId"] = s.fromId
+	if s.fromID != nil {
+		parameters["fromId"] = s.fromID
 	}
 
 	if s.startTime != nil {

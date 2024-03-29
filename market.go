@@ -239,7 +239,7 @@ type HistoricalTradeLookup struct {
 	c      *Client
 	symbol string
 	limit  *uint
-	fromId *int64
+	fromID *int64
 }
 
 // Symbol set symbol
@@ -254,9 +254,9 @@ func (s *HistoricalTradeLookup) Limit(limit uint) *HistoricalTradeLookup {
 	return s
 }
 
-// FromId set fromId
-func (s *HistoricalTradeLookup) FromId(fromId int64) *HistoricalTradeLookup {
-	s.fromId = &fromId
+// FromID set fromID
+func (s *HistoricalTradeLookup) FromID(fromID int64) *HistoricalTradeLookup {
+	s.fromID = &fromID
 	return s
 }
 
@@ -271,8 +271,8 @@ func (s *HistoricalTradeLookup) Do(ctx context.Context, opts ...RequestOption) (
 	if s.limit != nil {
 		r.setParam("limit", *s.limit)
 	}
-	if s.fromId != nil {
-		r.setParam("fromId", *s.fromId)
+	if s.fromID != nil {
+		r.setParam("fromId", *s.fromID)
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
@@ -290,7 +290,7 @@ type AggTradesList struct {
 	c         *Client
 	symbol    string
 	limit     *int
-	fromId    *int
+	fromID    *int
 	startTime *uint64
 	endTime   *uint64
 }
@@ -307,9 +307,9 @@ func (s *AggTradesList) Limit(limit int) *AggTradesList {
 	return s
 }
 
-// FromId set fromId
-func (s *AggTradesList) FromId(fromId int) *AggTradesList {
-	s.fromId = &fromId
+// FromID set fromID
+func (s *AggTradesList) FromId(fromID int) *AggTradesList {
+	s.fromID = &fromID
 	return s
 }
 
@@ -336,8 +336,8 @@ func (s *AggTradesList) Do(ctx context.Context, opts ...RequestOption) (res []*A
 	if s.limit != nil {
 		r.setParam("limit", *s.limit)
 	}
-	if s.fromId != nil {
-		r.setParam("fromId", *s.fromId)
+	if s.fromID != nil {
+		r.setParam("fromId", *s.fromID)
 	}
 	if s.startTime != nil {
 		r.setParam("startTime", *s.startTime)

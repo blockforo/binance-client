@@ -40,7 +40,11 @@ func (s *baseTestSuite) mockDo(data []byte, err error, statusCode ...int) {
 	if len(statusCode) > 0 {
 		code = statusCode[0]
 	}
-	s.client.On("do", anyHTTPRequest()).Return(newHTTPResponse(data, code), err)
+	// Close it's a no-op here
+	resp := newHTTPResponse(data, code)
+	defer resp.Body.Close()
+
+	s.client.On("do", anyHTTPRequest()).Return(resp, err)
 }
 
 func (s *baseTestSuite) assertDo() {
