@@ -1,0 +1,56 @@
+name: Build
+
+# Cancel concurrent jobs for the same ref
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+      - rc-**
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    env:
+      GO111MODULE: on
+    steps:
+
+    # Checkkout
+    - uses: actions/checkout@v4
+
+    # Configure Golang
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: './go.mod'
+
+    # Run go ci lint to catch standard go issues
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:          
+        args: --issues-exit-code=0
+        skip-pkg-cache: true
+        skip-build-cache: true
+        version: latest
+        
+    # Make sure the go mod is tidy
+    - run: go mod tidy && git diff --exit-code
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: './go.mod'
+    - name: Run Unit Tests
+      run: go test -v -race -covermode=atomic .
