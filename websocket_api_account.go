@@ -17,6 +17,14 @@ func (s *AccountInformationService) RecvWindow(recvWindow int64) *AccountInforma
 }
 
 func (s *AccountInformationService) Do(ctx context.Context) (*AccountInformationResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{}
 
 	if s.recvWindow != nil {
@@ -27,8 +35,6 @@ func (s *AccountInformationService) Do(ctx context.Context) (*AccountInformation
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -108,6 +114,14 @@ func (s *AccountOrderRateLimitsService) RecvWindow(recvWindow int64) *AccountOrd
 }
 
 func (s *AccountOrderRateLimitsService) Do(ctx context.Context) (*AccountOrderRateLimitsResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{}
 
 	if s.recvWindow != nil {
@@ -118,8 +132,6 @@ func (s *AccountOrderRateLimitsService) Do(ctx context.Context) (*AccountOrderRa
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -207,6 +219,14 @@ func (s *AccountOrderHistoryService) RecvWindow(recvWindow int64) *AccountOrderH
 }
 
 func (s *AccountOrderHistoryService) Do(ctx context.Context) (*AccountOrderHistoryResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 	}
@@ -235,8 +255,6 @@ func (s *AccountOrderHistoryService) Do(ctx context.Context) (*AccountOrderHisto
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -335,6 +353,14 @@ func (s *AccountOCOHistoryService) RecvWindow(recvWindow int64) *AccountOCOHisto
 }
 
 func (s *AccountOCOHistoryService) Do(ctx context.Context) (*AccountOCOHistoryResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{}
 
 	if s.limit != nil {
@@ -361,8 +387,6 @@ func (s *AccountOCOHistoryService) Do(ctx context.Context) (*AccountOCOHistoryRe
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -471,6 +495,14 @@ func (s *AccountTradeHistoryService) RecvWindow(recvWindow int64) *AccountTradeH
 }
 
 func (s *AccountTradeHistoryService) Do(ctx context.Context) (*AccountTradeHistoryResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 	}
@@ -499,8 +531,6 @@ func (s *AccountTradeHistoryService) Do(ctx context.Context) (*AccountTradeHisto
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -566,6 +596,14 @@ func (s *AccountPreventedMatchesService) RecvWindow(recvWindow int64) *AccountPr
 }
 
 func (s *AccountPreventedMatchesService) Do(ctx context.Context) (*AccountPreventedMatchesResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{}
 
 	if s.recvWindow != nil {
@@ -576,8 +614,6 @@ func (s *AccountPreventedMatchesService) Do(ctx context.Context) (*AccountPreven
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,

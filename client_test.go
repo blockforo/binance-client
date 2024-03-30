@@ -34,6 +34,7 @@ func (s *baseTestSuite) SetupTest() {
 	s.client = newMockedClient(s.apiKey, s.secretKey, s.baseURL)
 }
 
+//nolint:unparam // TODO: fix the linter later on - the tests always pass nil in the err parameter
 func (s *baseTestSuite) mockDo(data []byte, err error, statusCode ...int) {
 	s.client.Client.do = s.client.do
 	code := http.StatusOK

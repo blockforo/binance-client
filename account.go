@@ -1747,8 +1747,6 @@ func (s *GetMyTradesService) Do(ctx context.Context, opts ...RequestOption) (res
 	return res, nil
 }
 
-//type AccountTradeListResponse []AccountTrade
-
 type AccountTradeListResponse struct {
 	Id              int64  `json:"id"`
 	Symbol          string `json:"symbol"`

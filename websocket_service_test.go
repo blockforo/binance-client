@@ -55,9 +55,11 @@ func (s *websocketTestSuite) assertUserDataEvent(e, a *WsUserDataEvent) {
 	r.Equal(e.Time, a.Time, "Time")
 	r.Equal(e.TransactionTime, a.TransactionTime, "TransactionTime")
 	r.Equal(e.AccountUpdateTime, a.AccountUpdateTime, "AccountUpdateTime")
+	var update WsAccountUpdate
 	for i, e := range e.AccountUpdate.WsAccountUpdates {
+		update = e
 		a := a.AccountUpdate.WsAccountUpdates[i]
-		s.assertAccountUpdate(&e, &a)
+		s.assertAccountUpdate(&update, &a)
 	}
 	s.assertOrderUpdate(&e.OrderUpdate, &a.OrderUpdate)
 	s.assertBalanceUpdate(&e.BalanceUpdate, &a.BalanceUpdate)

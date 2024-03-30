@@ -1783,6 +1783,8 @@ type GetFuturesPositionRiskOfSubAccountV2COINResp struct {
 }
 
 // Enable Leverage Token for Sub-account (For Master Account)
+//
+//nolint:gosec // It's detected as credentials
 const (
 	enableLeverageTokenForSubAccountEndpoint = "/sapi/v1/sub-account/blvt/enable"
 )
@@ -1829,7 +1831,8 @@ type EnableLeverageTokenForSubAccountResp struct {
 }
 
 // Get IP Restriction for a Sub-account API Key (For Master Account)
-
+//
+//nolint:gosec // It's detected as credentials
 const (
 	getIPRestrictionForSubAccountAPIKeyEndpoint = "/sapi/v1/sub-account/subaccountApi/ipRestriction"
 )
@@ -1880,7 +1883,8 @@ type GetIPRestrictionForSubAccountAPIKeyResp struct {
 }
 
 // Delete IP List For a Sub-account API Key (For Master Account)
-
+//
+//nolint:gosec // It's detected as credentials
 const (
 	deleteIPListForSubAccountAPIKeyEndpoint = "/sapi/v1/sub-account/subaccountApi/ipRestriction/ipList"
 )
@@ -1940,7 +1944,8 @@ type DeleteIPListForSubAccountAPIKeyResp struct {
 }
 
 // Update IP Restriction for Sub-Account API key (For Master Account)
-
+//
+//nolint:gosec // It's detected as credentials
 const (
 	updateIPRestrictionForSubAccountAPIKeyEndpoint = "/sapi/v2/sub-account/subaccountApi/ipRestriction"
 )

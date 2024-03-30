@@ -31,12 +31,12 @@ type request struct {
 }
 
 // addParam add param with key/value to query string
-func (r *request) addParam(key string, value interface{}) *request {
+func (r *request) addParam(key string, value interface{}) {
 	if r.query == nil {
 		r.query = url.Values{}
 	}
 	r.query.Add(key, fmt.Sprintf("%v", value))
-	return r
+	// return r
 }
 
 // setParam set param with key/value to query string

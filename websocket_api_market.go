@@ -23,6 +23,14 @@ func (s *DepthService) Limit(limit int) *DepthService {
 }
 
 func (s *DepthService) Do(ctx context.Context) (*DepthResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 	}
@@ -30,8 +38,6 @@ func (s *DepthService) Do(ctx context.Context) (*DepthResponse, error) {
 	if s.limit != nil {
 		parameters["limit"] = s.limit
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -42,7 +48,7 @@ func (s *DepthService) Do(ctx context.Context) (*DepthResponse, error) {
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -93,6 +99,14 @@ func (s *RecentTradesService) Limit(limit int) *RecentTradesService {
 }
 
 func (s *RecentTradesService) Do(ctx context.Context) (*RecentTradesResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 	}
@@ -100,8 +114,6 @@ func (s *RecentTradesService) Do(ctx context.Context) (*RecentTradesResponse, er
 	if s.limit != nil {
 		parameters["limit"] = strconv.Itoa(*s.limit)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -112,7 +124,7 @@ func (s *RecentTradesService) Do(ctx context.Context) (*RecentTradesResponse, er
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -172,6 +184,14 @@ func (s *HistoricalTradesService) FromID(fromID int64) *HistoricalTradesService 
 }
 
 func (s *HistoricalTradesService) Do(ctx context.Context) (*HistoricalTradesResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 		"apiKey": s.websocketAPI.APIKey,
@@ -185,8 +205,6 @@ func (s *HistoricalTradesService) Do(ctx context.Context) (*HistoricalTradesResp
 		parameters["fromId"] = s.fromID
 	}
 
-	id := getUUID()
-
 	payload := map[string]interface{}{
 		"id":     id,
 		"method": "trades.historical",
@@ -196,7 +214,7 @@ func (s *HistoricalTradesService) Do(ctx context.Context) (*HistoricalTradesResp
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -269,6 +287,14 @@ func (s *AggregateTradesService) Limit(limit int) *AggregateTradesService {
 }
 
 func (s *AggregateTradesService) Do(ctx context.Context) (*AggregateTradesResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 	}
@@ -289,8 +315,6 @@ func (s *AggregateTradesService) Do(ctx context.Context) (*AggregateTradesRespon
 		parameters["limit"] = s.limit
 	}
 
-	id := getUUID()
-
 	payload := map[string]interface{}{
 		"id":     id,
 		"method": "trades.aggregate",
@@ -300,7 +324,7 @@ func (s *AggregateTradesService) Do(ctx context.Context) (*AggregateTradesRespon
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -374,6 +398,14 @@ func (s *KlinesService) Limit(limit int) *KlinesService {
 }
 
 func (s *KlinesService) Do(ctx context.Context) (*WsAPIKlinesResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol":   s.symbol,
 		"interval": s.interval,
@@ -391,8 +423,6 @@ func (s *KlinesService) Do(ctx context.Context) (*WsAPIKlinesResponse, error) {
 		parameters["limit"] = *s.limit
 	}
 
-	id := getUUID()
-
 	payload := map[string]interface{}{
 		"id":     id,
 		"method": "klines",
@@ -402,7 +432,7 @@ func (s *KlinesService) Do(ctx context.Context) (*WsAPIKlinesResponse, error) {
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -441,11 +471,17 @@ func (s *AvgPriceService) Symbol(symbol string) *AvgPriceService {
 }
 
 func (s *AvgPriceService) Do(ctx context.Context) (*WsAPIAvgPriceResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -456,7 +492,7 @@ func (s *AvgPriceService) Do(ctx context.Context) (*WsAPIAvgPriceResponse, error
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -500,11 +536,17 @@ func (s *Ticker24hrService) Symbol(symbol string) *Ticker24hrService {
 }
 
 func (s *Ticker24hrService) Do(ctx context.Context) (*WsAPITicker24hrResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -515,7 +557,7 @@ func (s *Ticker24hrService) Do(ctx context.Context) (*WsAPITicker24hrResponse, e
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -578,11 +620,17 @@ func (s *TickerService) Symbol(symbol string) *TickerService {
 }
 
 func (s *TickerService) Do(ctx context.Context) (*WsAPITickerResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -593,7 +641,7 @@ func (s *TickerService) Do(ctx context.Context) (*WsAPITickerResponse, error) {
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -650,11 +698,17 @@ func (s *TickerPriceService) Symbol(symbol string) *TickerPriceService {
 }
 
 func (s *TickerPriceService) Do(ctx context.Context) (*WsAPIPriceTickerResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -665,7 +719,7 @@ func (s *TickerPriceService) Do(ctx context.Context) (*WsAPIPriceTickerResponse,
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -709,11 +763,17 @@ func (s *TickerBookService) Symbol(symbol string) *TickerBookService {
 }
 
 func (s *TickerBookService) Do(ctx context.Context) (*WsAPIBookTickerResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol": s.symbol,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -724,7 +784,7 @@ func (s *TickerBookService) Do(ctx context.Context) (*WsAPIBookTickerResponse, e
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -794,6 +854,14 @@ func (s *UIKlinesService) Limit(limit int) *UIKlinesService {
 }
 
 func (s *UIKlinesService) Do(ctx context.Context) (*UIKlinesResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"symbol":   s.symbol,
 		"interval": s.interval,
@@ -811,8 +879,6 @@ func (s *UIKlinesService) Do(ctx context.Context) (*UIKlinesResponse, error) {
 		parameters["limit"] = *s.limit
 	}
 
-	id := getUUID()
-
 	payload := map[string]interface{}{
 		"id":     id,
 		"method": "uiKlines",
@@ -822,7 +888,7 @@ func (s *UIKlinesService) Do(ctx context.Context) (*UIKlinesResponse, error) {
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}

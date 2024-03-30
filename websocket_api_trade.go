@@ -107,6 +107,14 @@ func (s *OrderPlacementService) RecvWindow(recvWindow int64) *OrderPlacementServ
 }
 
 func (s *OrderPlacementService) Do(ctx context.Context) (*OrderPlacementResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 		"side":   s.side,
@@ -157,8 +165,6 @@ func (s *OrderPlacementService) Do(ctx context.Context) (*OrderPlacementResponse
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -333,6 +339,14 @@ func (s *TestOrderPlacementService) RecvWindow(recvWindow int64) *TestOrderPlace
 }
 
 func (s *TestOrderPlacementService) Do(ctx context.Context) (*OrderPlacementResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 		"side":   s.side,
@@ -383,8 +397,6 @@ func (s *TestOrderPlacementService) Do(ctx context.Context) (*OrderPlacementResp
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -444,6 +456,14 @@ func (s *OrderStatusService) RecvWindow(recvWindow int64) *OrderStatusService {
 }
 
 func (s *OrderStatusService) Do(ctx context.Context) (*OrderStatusResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 	}
@@ -464,8 +484,6 @@ func (s *OrderStatusService) Do(ctx context.Context) (*OrderStatusResponse, erro
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -574,6 +592,14 @@ func (s *OrderCancelService) RecvWindow(recvWindow int64) *OrderCancelService {
 }
 
 func (s *OrderCancelService) Do(ctx context.Context) (*OrderCancelResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 	}
@@ -602,8 +628,6 @@ func (s *OrderCancelService) Do(ctx context.Context) (*OrderCancelResponse, erro
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -798,6 +822,14 @@ func (s *OrderCancelReplaceService) RecvWindow(recvWindow int64) *OrderCancelRep
 }
 
 func (s *OrderCancelReplaceService) Do(ctx context.Context) (*OrderCancelReplaceResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol":            s.symbol,
 		"cancelReplaceMode": s.cancelReplaceMode,
@@ -877,8 +909,6 @@ func (s *OrderCancelReplaceService) Do(ctx context.Context) (*OrderCancelReplace
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -985,6 +1015,14 @@ func (s *OpenOrdersStatusService) RecvWindow(recvWindow int64) *OpenOrdersStatus
 }
 
 func (s *OpenOrdersStatusService) Do(ctx context.Context) (*OpenOrdersStatusResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{}
 
 	if s.symbol != nil {
@@ -999,8 +1037,6 @@ func (s *OpenOrdersStatusService) Do(ctx context.Context) (*OpenOrdersStatusResp
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -1079,6 +1115,14 @@ func (s *OpenOrdersCancelAllService) RecvWindow(recvWindow int64) *OpenOrdersCan
 }
 
 func (s *OpenOrdersCancelAllService) Do(ctx context.Context) (*OpenOrdersCancelAllResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 	}
@@ -1091,8 +1135,6 @@ func (s *OpenOrdersCancelAllService) Do(ctx context.Context) (*OpenOrdersCancelA
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -1272,6 +1314,14 @@ func (s *OrderListPlaceService) RecvWindow(recvWindow int64) *OrderListPlaceServ
 }
 
 func (s *OrderListPlaceService) Do(ctx context.Context) (*OrderListPlaceResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol":   s.symbol,
 		"side":     s.side,
@@ -1347,8 +1397,6 @@ func (s *OrderListPlaceService) Do(ctx context.Context) (*OrderListPlaceResponse
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -1446,6 +1494,14 @@ func (s *OrderListStatusService) RecvWindow(recvWindow int64) *OrderListStatusSe
 }
 
 func (s *OrderListStatusService) Do(ctx context.Context) (*OrderListStatusResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{}
 
 	if s.origClientOrderId != nil {
@@ -1464,8 +1520,6 @@ func (s *OrderListStatusService) Do(ctx context.Context) (*OrderListStatusRespon
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -1556,6 +1610,14 @@ func (s *OrderListCancelService) RecvWindow(recvWindow int64) *OrderListCancelSe
 }
 
 func (s *OrderListCancelService) Do(ctx context.Context) (*OrderListCancelResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{
 		"symbol": s.symbol,
 	}
@@ -1580,8 +1642,6 @@ func (s *OrderListCancelService) Do(ctx context.Context) (*OrderListCancelRespon
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -1661,6 +1721,14 @@ type OpenOrderListsStatusService struct {
 }
 
 func (s *OpenOrderListsStatusService) Do(ctx context.Context) (*OpenOrderListsStatusResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]string{}
 
 	if s.recvWindow != nil {
@@ -1671,8 +1739,6 @@ func (s *OpenOrderListsStatusService) Do(ctx context.Context) (*OpenOrderListsSt
 	if err != nil {
 		panic(err)
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,

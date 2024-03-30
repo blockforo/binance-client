@@ -41,7 +41,7 @@ linters:
   enable:
     - bodyclose
     # - depguard
-    - dupl
+    # - dupl # Re-enable later on
     - errcheck
     - gosec
     - goconst

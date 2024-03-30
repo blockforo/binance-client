@@ -1684,6 +1684,8 @@ type CloudMiningPaymentHistoryResponse struct {
 }
 
 // Get API Key Permission (USER_DATA)
+//
+//nolint:gosec // It's detected as credentials
 const (
 	apiKeyPermissionEndpoint = "/sapi/v1/account/apiRestrictions"
 )

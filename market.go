@@ -437,10 +437,10 @@ func (s *Klines) Do(ctx context.Context, opts ...RequestOption) (res []*KlinesRe
 	var klines []*KlinesResponse
 	for _, kline := range klinesResponseArray {
 		openTime := kline[0].(float64)
-		open := kline[1].(string)
+		opening := kline[1].(string)
 		high := kline[2].(string)
 		low := kline[3].(string)
-		close := kline[4].(string)
+		closing := kline[4].(string)
 		volume := kline[5].(string)
 		closeTime := kline[6].(float64)
 		quoteAssetVolume := kline[7].(string)
@@ -451,10 +451,10 @@ func (s *Klines) Do(ctx context.Context, opts ...RequestOption) (res []*KlinesRe
 		// create a KlinesResponse struct using the parsed fields
 		klinesResponse := &KlinesResponse{
 			OpenTime:                 uint64(openTime),
-			Open:                     open,
+			Open:                     opening,
 			High:                     high,
 			Low:                      low,
-			Close:                    close,
+			Close:                    closing,
 			Volume:                   volume,
 			CloseTime:                uint64(closeTime),
 			QuoteAssetVolume:         quoteAssetVolume,
@@ -554,10 +554,10 @@ func (s *UiKlines) Do(ctx context.Context, opts ...RequestOption) (res []*UiKlin
 	var uiklines []*UiKlinesResponse
 	for _, uikline := range uiklinesResponseArray {
 		openTime := uikline[0].(float64)
-		open := uikline[1].(string)
+		opening := uikline[1].(string)
 		high := uikline[2].(string)
 		low := uikline[3].(string)
-		close := uikline[4].(string)
+		closing := uikline[4].(string)
 		volume := uikline[5].(string)
 		closeTime := uikline[6].(float64)
 		quoteAssetVolume := uikline[7].(string)
@@ -568,10 +568,10 @@ func (s *UiKlines) Do(ctx context.Context, opts ...RequestOption) (res []*UiKlin
 		// create a KlinesResponse struct using the parsed fields
 		uiklinesResponse := &UiKlinesResponse{
 			OpenTime:                 uint64(openTime),
-			Open:                     open,
+			Open:                     opening,
 			High:                     high,
 			Low:                      low,
-			Close:                    close,
+			Close:                    closing,
 			Volume:                   volume,
 			CloseTime:                uint64(closeTime),
 			QuoteAssetVolume:         quoteAssetVolume,

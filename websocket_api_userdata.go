@@ -10,11 +10,17 @@ type StartUserDataStreamService struct {
 }
 
 func (s *StartUserDataStreamService) Do(ctx context.Context) (*StartUserDataStreamResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"apiKey": s.websocketAPI.APIKey,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -25,7 +31,7 @@ func (s *StartUserDataStreamService) Do(ctx context.Context) (*StartUserDataStre
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -66,12 +72,18 @@ func (s *PingUserDataStreamService) ListenKey(listenKey string) *PingUserDataStr
 }
 
 func (s *PingUserDataStreamService) Do(ctx context.Context) (*PingUserDataStreamResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"listenKey": s.listenKey,
 		"apiKey":    s.websocketAPI.APIKey,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -82,7 +94,7 @@ func (s *PingUserDataStreamService) Do(ctx context.Context) (*PingUserDataStream
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -121,12 +133,18 @@ func (s *StopUserDataStreamService) ListenKey(listenKey string) *StopUserDataStr
 }
 
 func (s *StopUserDataStreamService) Do(ctx context.Context) (*StopUserDataStreamResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	parameters := map[string]interface{}{
 		"listenKey": s.listenKey,
 		"apiKey":    s.websocketAPI.APIKey,
 	}
-
-	id := getUUID()
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -137,7 +155,7 @@ func (s *StopUserDataStreamService) Do(ctx context.Context) (*StopUserDataStream
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
