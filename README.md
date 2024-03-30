@@ -14,25 +14,25 @@ This is a lightweight library that works as a connector to [Binance public API](
 
 ## Installation
 ```shell
-go get github.com/binance/binance-connector-go
+go get github.com/blockforo/binance-client
 ```
 
 To reference the package in your code, use the following import statement:
 ```golang
 import (
-    "github.com/binance/binance-connector-go"
+    "github.com/blockforo/binance-client"
 )
 ```
 ## Authentication
 ```go
 // The Client can be initiated with apiKey, secretKey and baseURL.
 // The baseURL is optional. If not specified, it will default to "https://api.binance.com".
-client := binance_connector.NewClient("yourApiKey", "yourSecretKey")
+client := binance.NewClient("yourApiKey", "yourSecretKey")
 ```
 
 ## Extra Options
 ```go
-client := binance_connector.NewClient("yourApiKey", "yourSecretKey", "https://api.binance.com")
+client := binance.NewClient("yourApiKey", "yourSecretKey", "https://api.binance.com")
 
 // Debug Mode
 client.Debug = true
@@ -52,7 +52,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -61,7 +61,7 @@ func main() {
 	baseURL := "https://testnet.binance.vision"
 
 	// Initialise the client
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Create new order
 	newOrder, err := client.NewCreateOrderService().Symbol("BTCUSDT").
@@ -71,7 +71,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(newOrder))
+	fmt.Println(binance.PrettyPrint(newOrder))
 }
 ```
 
@@ -89,11 +89,11 @@ Initialising Websocket Client
 ```go
 // Initialise Websocket Client with Production baseURL and false for "isCombined" parameter
 
-websocketStreamClient := binance_connector.NewWebsocketStreamClient(false, "wss://testnet.binance.vision")
+websocketStreamClient := binance.NewWebsocketStreamClient(false, "wss://testnet.binance.vision")
 
 // Initialise Websocket Client with Production baseURL and true for "isCombined" parameter
 
-websocketStreamClient := binance_connector.NewWebsocketStreamClient(true)
+websocketStreamClient := binance.NewWebsocketStreamClient(true)
 ```
 
 Diff. Depth Stream Example
@@ -105,15 +105,15 @@ import (
 	"fmt"
 	"time"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
 	// Initialise Websocket Client with Testnet BaseURL and false for "isCombined" parameter
-	websocketStreamClient := binance_connector.NewWebsocketStreamClient(false, "wss://testnet.binance.vision")
+	websocketStreamClient := binance.NewWebsocketStreamClient(false, "wss://testnet.binance.vision")
 
-	wsDepthHandler := func(event *binance_connector.WsDepthEvent) {
-		fmt.Println(binance_connector.PrettyPrint(event))
+	wsDepthHandler := func(event *binance.WsDepthEvent) {
+		fmt.Println(binance.PrettyPrint(event))
 	}
 
 	errHandler := func(err error) {
@@ -145,15 +145,15 @@ import (
 	"fmt"
 	"time"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
 	// Set isCombined parameter to true as we are using Combined Depth Stream
-	websocketStreamClient := binance_connector.NewWebsocketStreamClient(true)
+	websocketStreamClient := binance.NewWebsocketStreamClient(true)
 
-	wsCombinedDepthHandler := func(event *binance_connector.WsDepthEvent) {
-		fmt.Println(binance_connector.PrettyPrint(event))
+	wsCombinedDepthHandler := func(event *binance.WsDepthEvent) {
+		fmt.Println(binance.PrettyPrint(event))
 	}
 	errHandler := func(err error) {
 		fmt.Println(err)
@@ -177,7 +177,7 @@ func main() {
 ```go
 func OCOHistoryExample() {
 	// Initialise Websocket API Client
-	client := binance_connector.NewWebsocketAPIClient("api_key", "secret_key")
+	client := binance.NewWebsocketAPIClient("api_key", "secret_key")
 	// Connect to Websocket API
 	err := client.Connect()
 	if err != nil {
@@ -194,7 +194,7 @@ func OCOHistoryExample() {
 	}
 
 	// Print the response
-	fmt.Println(binance_connector.PrettyPrint(response))
+	fmt.Println(binance.PrettyPrint(response))
 
 	client.WaitForCloseSignal()
 }
@@ -299,4 +299,4 @@ Futures and European Options APIs are not supported:
 ## Contributing
 Contributions are welcome.<br/>
 If you've found a bug within this project, please open an issue to discuss what you would like to change.<br/>
-If it's an issue with the API, please open a topic at [Binance Developer Community](https://dev.binance.vision)
+If it's an issue with the API, please open a topic at [Blockforo Binance Client Discussions](https://github.com/blockforo/binance-client/discussions)

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginSmallLiabilityExchangeHistory() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// MarginSmallLiabilityExchangeHistoryService - /sapi/v1/margin/exchange-small-liability-history
 	marginSmallLiabilityExchangeHistory, err := client.NewMarginSmallLiabilityExchangeHistoryService().
@@ -25,5 +25,5 @@ func MarginSmallLiabilityExchangeHistory() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginSmallLiabilityExchangeHistory))
+	fmt.Println(binance.PrettyPrint(marginSmallLiabilityExchangeHistory))
 }

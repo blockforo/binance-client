@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetSystemStatus() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// GetSystemStatusService get account info - /sapi/v1/system/status
 	systemStatus, err := client.NewGetSystemStatusService().Do(context.Background())
@@ -24,5 +24,5 @@ func GetSystemStatus() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(systemStatus))
+	fmt.Println(binance.PrettyPrint(systemStatus))
 }

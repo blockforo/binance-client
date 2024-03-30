@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 func AvgPrice() {
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient("", "", baseURL)
+	client := binance.NewClient("", "", baseURL)
 
 	// AvgPrice
 	avgPrice, err := client.NewAvgPriceService().
@@ -23,5 +23,5 @@ func AvgPrice() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(avgPrice))
+	fmt.Println(binance.PrettyPrint(avgPrice))
 }

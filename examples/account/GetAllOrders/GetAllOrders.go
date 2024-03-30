@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetAllOrders() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Binance Get all account orders; active, canceled, or filled - GET /api/v3/allOrders
 	getAllOrders, err := client.NewGetAllOrdersService().Symbol("BTCUSDT").
@@ -25,5 +25,5 @@ func GetAllOrders() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getAllOrders))
+	fmt.Println(binance.PrettyPrint(getAllOrders))
 }

@@ -1,6 +1,6 @@
-module github.com/binance/binance-connector-go
+module github.com/blockforo/binance-client
 
-go 1.19
+go 1.21
 
 require (
 	github.com/bitly/go-simplejson v0.5.1

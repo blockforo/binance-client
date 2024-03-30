@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 func UiKlines() {
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient("", "", baseURL)
+	client := binance.NewClient("", "", baseURL)
 
 	// UiKlines
 	uiKlines, err := client.NewUIKlinesService().
@@ -23,5 +23,5 @@ func UiKlines() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(uiKlines))
+	fmt.Println(binance.PrettyPrint(uiKlines))
 }

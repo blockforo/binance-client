@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func Borrow() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// BorrowService - /sapi/v1/margin/loan
 	borrow, err := client.NewBorrowService().Asset("USDT").Amount(50.0).
@@ -25,5 +25,5 @@ func Borrow() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(borrow))
+	fmt.Println(binance.PrettyPrint(borrow))
 }

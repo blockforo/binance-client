@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func QueryOrder() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Binance Query Order (USER_DATA) - GET /api/v3/order
 	queryOrder, err := client.NewGetOrderService().Symbol("BTCUSDT").
@@ -25,5 +25,5 @@ func QueryOrder() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(queryOrder))
+	fmt.Println(binance.PrettyPrint(queryOrder))
 }

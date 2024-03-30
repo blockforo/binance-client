@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginIsolatedAccountTransferHistory() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// MarginIsolatedAccountTransferHistoryService - /sapi/v1/margin/isolated/transfer
 	marginIsolatedAccountTransferHistory, err := client.NewMarginIsolatedAccountTransferHistoryService().
@@ -25,5 +25,5 @@ func MarginIsolatedAccountTransferHistory() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginIsolatedAccountTransferHistory))
+	fmt.Println(binance.PrettyPrint(marginIsolatedAccountTransferHistory))
 }

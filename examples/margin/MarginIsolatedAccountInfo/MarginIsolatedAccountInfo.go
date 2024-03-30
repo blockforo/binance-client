@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginIsolatedAccountInfo() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// MarginIsolatedAccountInfoService - /sapi/v1/margin/isolated/account
 	marginIsolatedAccountInfo, err := client.NewMarginIsolatedAccountInfoService().Do(context.Background())
@@ -24,5 +24,5 @@ func MarginIsolatedAccountInfo() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginIsolatedAccountInfo))
+	fmt.Println(binance.PrettyPrint(marginIsolatedAccountInfo))
 }

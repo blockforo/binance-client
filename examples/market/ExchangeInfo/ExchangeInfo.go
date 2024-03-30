@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 func ExchangeInfo() {
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient("", "", baseURL)
+	client := binance.NewClient("", "", baseURL)
 
 	// ExchangeInfo
 	exchangeInfo, err := client.NewExchangeInfoService().Do(context.Background())
@@ -22,5 +22,5 @@ func ExchangeInfo() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(exchangeInfo))
+	fmt.Println(binance.PrettyPrint(exchangeInfo))
 }

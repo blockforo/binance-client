@@ -505,8 +505,8 @@ func (s *accountTestSuite) TestQueryOCOService() {
 	}
 
 	oco, err := s.client.NewQueryOCOService().
-		OrderListId(10).
-		OrigClientOrderId("test-client-order-id").
+		OrderListID(10).
+		OrigClientOrderID("test-client-order-id").
 		Do(context.Background())
 
 	s.r().NoError(err)

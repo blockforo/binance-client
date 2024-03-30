@@ -1258,7 +1258,7 @@ func (s *marginTestSuite) TestListDustLog() {
 	s.Len(rows[1].UserAssetDribbletDetails, 2)
 
 	s.assertUserAssetDribbletEqual(&UserAssetDribblet{
-		TotalTransferedAmount:    "0.00132256",
+		TotalTransferredAmount:   "0.00132256",
 		TotalServiceChargeAmount: "0.00002699",
 		TransId:                  45178372831,
 		UserAssetDribbletDetails: []UserAssetDribbletDetail{
@@ -1267,7 +1267,7 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.000009",
 				Amount:              "0.0009",
 				OperateTime:         1615985535000,
-				TransferedAmount:    "0.000441",
+				TransferredAmount:   "0.000441",
 				FromAsset:           "USDT",
 			},
 			{
@@ -1275,13 +1275,13 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.00001799",
 				Amount:              "0.0009",
 				OperateTime:         1615985535000,
-				TransferedAmount:    "0.00088156",
+				TransferredAmount:   "0.00088156",
 				FromAsset:           "ETH",
 			},
 		},
 	}, &rows[0])
 	s.assertUserAssetDribbletEqual(&UserAssetDribblet{
-		TotalTransferedAmount:    "0.00058795",
+		TotalTransferredAmount:   "0.00058795",
 		TotalServiceChargeAmount: "0.000012",
 		TransId:                  4357015,
 		UserAssetDribbletDetails: []UserAssetDribbletDetail{
@@ -1290,7 +1290,7 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.00001",
 				Amount:              "0.001",
 				OperateTime:         1616203180000,
-				TransferedAmount:    "0.00049",
+				TransferredAmount:   "0.00049",
 				FromAsset:           "USDT",
 			},
 			{
@@ -1298,7 +1298,7 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.000002",
 				Amount:              "0.0001",
 				OperateTime:         1616203180000,
-				TransferedAmount:    "0.00009795",
+				TransferredAmount:   "0.00009795",
 				FromAsset:           "ETH",
 			},
 		},
@@ -1308,7 +1308,7 @@ func (s *marginTestSuite) TestListDustLog() {
 
 func (s *marginTestSuite) assertUserAssetDribbletEqual(e, a *UserAssetDribblet) {
 	r := s.r()
-	r.Equal(e.TotalTransferedAmount, a.TotalTransferedAmount, `TotalTransferedAmount`)
+	r.Equal(e.TotalTransferredAmount, a.TotalTransferredAmount, `TotalTransferedAmount`)
 	r.Equal(e.TotalServiceChargeAmount, a.TotalServiceChargeAmount, `TotalServiceChargeAmount`)
 	r.Equal(e.TransId, a.TransId, `TransID`)
 	s.assertUserAssetDribbletDetailEqual(&e.UserAssetDribbletDetails[0], &a.UserAssetDribbletDetails[0])
@@ -1322,7 +1322,7 @@ func (s *marginTestSuite) assertUserAssetDribbletDetailEqual(e, a *UserAssetDrib
 	r.Equal(e.ServiceChargeAmount, a.ServiceChargeAmount, `ServiceChargeAmount`)
 	r.Equal(e.Amount, a.Amount, `Amount`)
 	r.Equal(e.OperateTime, a.OperateTime, `OperateTime`)
-	r.Equal(e.TransferedAmount, a.TransferedAmount, `TransferedAmount`)
+	r.Equal(e.TransferredAmount, a.TransferredAmount, `TransferedAmount`)
 	r.Equal(e.FromAsset, a.FromAsset, `FromAsset`)
 }
 

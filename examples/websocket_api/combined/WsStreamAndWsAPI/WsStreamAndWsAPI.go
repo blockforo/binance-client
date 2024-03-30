@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -14,9 +14,9 @@ func main() {
 
 func WsStreamAndWsAPI() {
 	// Websocket Stream
-	websocketStreamClient := binance_connector.NewWebsocketStreamClient(false)
-	wsTradeHandler := func(event *binance_connector.WsTradeEvent) {
-		fmt.Println(binance_connector.PrettyPrint(event))
+	websocketStreamClient := binance.NewWebsocketStreamClient(false)
+	wsTradeHandler := func(event *binance.WsTradeEvent) {
+		fmt.Println(binance.PrettyPrint(event))
 	}
 	errHandler := func(err error) {
 		fmt.Println(err)
@@ -28,7 +28,7 @@ func WsStreamAndWsAPI() {
 	}
 
 	// Websocket API
-	client := binance_connector.NewWebsocketAPIClient("api_key", "secret_key", "wss://testnet.binance.vision/ws-api/v3")
+	client := binance.NewWebsocketAPIClient("api_key", "secret_key", "wss://testnet.binance.vision/ws-api/v3")
 	err2 := client.Connect()
 	if err2 != nil {
 		fmt.Println("Error: ", err2)
@@ -42,7 +42,7 @@ func WsStreamAndWsAPI() {
 		return
 	}
 
-	fmt.Println(binance_connector.PrettyPrint(response))
+	fmt.Println(binance.PrettyPrint(response))
 
 	<-doneCh
 	client.WaitForCloseSignal()

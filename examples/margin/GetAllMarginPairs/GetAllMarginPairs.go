@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetAllMarginPairs() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// GetAllMarginPairsService - /sapi/v1/margin/allPairs
 	getAllMarginPairs, err := client.NewGetAllMarginPairsService().Do(context.Background())
@@ -24,5 +24,5 @@ func GetAllMarginPairs() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getAllMarginPairs))
+	fmt.Println(binance.PrettyPrint(getAllMarginPairs))
 }

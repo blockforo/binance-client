@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 
 func ServerTime() {
 
-	client := binance_connector.NewClient("", "")
+	client := binance.NewClient("", "")
 
 	// set to debug mode
 	client.Debug = true
@@ -24,5 +24,5 @@ func ServerTime() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(serverTime))
+	fmt.Println(binance.PrettyPrint(serverTime))
 }

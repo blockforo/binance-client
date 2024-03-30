@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func ForceLiquidationRecord() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// ForceLiquidationRecordService - /sapi/v1/margin/forceLiquidationRec
 	forceLiquidationRecord, err := client.NewForceLiquidationRecordService().
@@ -25,5 +25,5 @@ func ForceLiquidationRecord() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(forceLiquidationRecord))
+	fmt.Println(binance.PrettyPrint(forceLiquidationRecord))
 }

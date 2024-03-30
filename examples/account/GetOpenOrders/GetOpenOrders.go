@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetCurrentOpenOrders() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Binance Get current open orders - GET /api/v3/openOrders
 	getCurrentOpenOrders, err := client.NewGetOpenOrdersService().Symbol("BTCUSDT").
@@ -25,5 +25,5 @@ func GetCurrentOpenOrders() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getCurrentOpenOrders))
+	fmt.Println(binance.PrettyPrint(getCurrentOpenOrders))
 }

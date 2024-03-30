@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetSummaryOfSubAccountMarginAccount() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Get Summary of Sub-account's Margin Account (For Master Account) - /sapi/v1/sub-account/margin/accountSummary
 	getSummaryOfSubAccountMarginAccount, err := client.NewGetSummaryOfSubAccountMarginAccountService().
@@ -25,5 +25,5 @@ func GetSummaryOfSubAccountMarginAccount() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getSummaryOfSubAccountMarginAccount))
+	fmt.Println(binance.PrettyPrint(getSummaryOfSubAccountMarginAccount))
 }

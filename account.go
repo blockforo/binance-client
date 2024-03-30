@@ -7,7 +7,10 @@ import (
 	"strconv"
 )
 
-const MARKET = "MARKET"
+const (
+	MARKET       = "MARKET"
+	RESULT_ORDER = "RESULT"
+)
 
 // Binance Test New Order endpoint (POST /api/v3/order/test)
 type TestNewOrder struct {
@@ -350,7 +353,7 @@ func (s *CreateOrderService) Do(ctx context.Context, opts ...RequestOption) (res
 		switch *s.newOrderRespType {
 		case "ACK":
 			respType = ACK
-		case "RESULT":
+		case RESULT_ORDER:
 			respType = RESULT
 		case "FULL":
 			respType = FULL
@@ -1399,9 +1402,9 @@ type OrderOCOResponse struct {
 type CancelOCOService struct {
 	c                 *Client
 	symbol            string
-	orderListId       *int
-	listClientOrderId *string
-	newClientOrderId  *string
+	orderListID       *int
+	listClientOrderID *string
+	newClientOrderID  *string
 }
 
 // Symbol set symbol
@@ -1410,21 +1413,21 @@ func (s *CancelOCOService) Symbol(symbol string) *CancelOCOService {
 	return s
 }
 
-// OrderListId set orderListId
-func (s *CancelOCOService) OrderListId(orderListId int) *CancelOCOService {
-	s.orderListId = &orderListId
+// OrderListID set orderListID
+func (s *CancelOCOService) OrderListID(orderListID int) *CancelOCOService {
+	s.orderListID = &orderListID
 	return s
 }
 
 // ListClientId set listClientId
-func (s *CancelOCOService) ListClientOrderId(ListClientOrderId string) *CancelOCOService {
-	s.listClientOrderId = &ListClientOrderId
+func (s *CancelOCOService) ListClientOrderID(listClientOrderID string) *CancelOCOService {
+	s.listClientOrderID = &listClientOrderID
 	return s
 }
 
-// NewClientOrderId set newClientOrderId
-func (s *CancelOCOService) NewClientOrderId(newClientOrderId string) *CancelOCOService {
-	s.newClientOrderId = &newClientOrderId
+// NewClientOrderID set newClientOrderID
+func (s *CancelOCOService) NewClientOrderID(newClientOrderID string) *CancelOCOService {
+	s.newClientOrderID = &newClientOrderID
 	return s
 }
 
@@ -1438,14 +1441,14 @@ func (s *CancelOCOService) Do(ctx context.Context, opts ...RequestOption) (res *
 	m := params{
 		"symbol": s.symbol,
 	}
-	if s.orderListId != nil {
-		m["orderListId"] = *s.orderListId
+	if s.orderListID != nil {
+		m["orderListId"] = *s.orderListID
 	}
-	if s.listClientOrderId != nil {
-		m["listClientOrderId"] = *s.listClientOrderId
+	if s.listClientOrderID != nil {
+		m["listClientOrderId"] = *s.listClientOrderID
 	}
-	if s.newClientOrderId != nil {
-		m["newClientOrderId"] = *s.newClientOrderId
+	if s.newClientOrderID != nil {
+		m["newClientOrderId"] = *s.newClientOrderID
 	}
 	r.setParams(m)
 	data, err := s.c.callAPI(ctx, r, opts...)
@@ -1464,19 +1467,19 @@ func (s *CancelOCOService) Do(ctx context.Context, opts ...RequestOption) (res *
 // QueryOCOService query OCO order
 type QueryOCOService struct {
 	c                 *Client
-	orderListId       *int64
-	origClientOrderId *string
+	orderListID       *int64
+	origClientOrderID *string
 }
 
 // OrderListId set orderListId
-func (s *QueryOCOService) OrderListId(orderListId int64) *QueryOCOService {
-	s.orderListId = &orderListId
+func (s *QueryOCOService) OrderListID(orderListID int64) *QueryOCOService {
+	s.orderListID = &orderListID
 	return s
 }
 
-// OrigClientOrderId set origClientOrderId
-func (s *QueryOCOService) OrigClientOrderId(origClientOrderId string) *QueryOCOService {
-	s.origClientOrderId = &origClientOrderId
+// OrigClientOrderID set origClientOrderID
+func (s *QueryOCOService) OrigClientOrderID(origClientOrderID string) *QueryOCOService {
+	s.origClientOrderID = &origClientOrderID
 	return s
 }
 
@@ -1487,11 +1490,11 @@ func (s *QueryOCOService) Do(ctx context.Context, opts ...RequestOption) (res *O
 		endpoint: "/api/v3/orderList",
 		secType:  secTypeSigned,
 	}
-	if s.orderListId != nil {
-		r.setParam("orderListId", *s.orderListId)
+	if s.orderListID != nil {
+		r.setParam("orderListId", *s.orderListID)
 	}
-	if s.origClientOrderId != nil {
-		r.setParam("origClientOrderId", s.origClientOrderId)
+	if s.origClientOrderID != nil {
+		r.setParam("origClientOrderId", s.origClientOrderID)
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {

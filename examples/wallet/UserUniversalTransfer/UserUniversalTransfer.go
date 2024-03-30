@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func UserUniversalTransfer() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// UserUniversalTransferService - /sapi/v1/asset/transfer
 	userUniversalTransfer, err := client.NewUserUniversalTransferService().
@@ -25,5 +25,5 @@ func UserUniversalTransfer() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(userUniversalTransfer))
+	fmt.Println(binance.PrettyPrint(userUniversalTransfer))
 }

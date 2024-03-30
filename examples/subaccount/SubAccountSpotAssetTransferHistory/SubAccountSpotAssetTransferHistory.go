@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func SubAccountSpotAssetTransferHistory() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Query Sub-account Spot Asset Transfer History (For Master Account) - /sapi/v1/sub-account/sub/transfer/history
 	subaccountSpotAssetTransferHistory, err := client.NewQuerySubAccountSpotAssetTransferHistoryService().FromEmail("from@email.com").
@@ -25,5 +25,5 @@ func SubAccountSpotAssetTransferHistory() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(subaccountSpotAssetTransferHistory))
+	fmt.Println(binance.PrettyPrint(subaccountSpotAssetTransferHistory))
 }

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 }
 
 func PingUserDataStream() {
-	client := binance_connector.NewWebsocketAPIClient("API_KEY", "")
+	client := binance.NewWebsocketAPIClient("API_KEY", "")
 	err := client.Connect()
 	if err != nil {
 		log.Printf("Error: %v", err)
@@ -27,7 +27,7 @@ func PingUserDataStream() {
 		return
 	}
 
-	fmt.Println(binance_connector.PrettyPrint(response.Response))
+	fmt.Println(binance.PrettyPrint(response.Response))
 
 	client.WaitForCloseSignal()
 }

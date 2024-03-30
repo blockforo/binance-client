@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func DeleteIPListForSubAccountAPIKey() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Delete IP List For a Sub-account API Key (For Master Account) - /sapi/v1/sub-account/subaccountApi/ipRestriction/ipList
 	deleteIPListForSubAccountAPIKey, err := client.NewDeleteIPListForSubAccountAPIKeyService().Email("email@email.com").
@@ -25,5 +25,5 @@ func DeleteIPListForSubAccountAPIKey() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(deleteIPListForSubAccountAPIKey))
+	fmt.Println(binance.PrettyPrint(deleteIPListForSubAccountAPIKey))
 }

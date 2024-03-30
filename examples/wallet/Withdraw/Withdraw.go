@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func Withdraw() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// WithdrawService - /sapi/v1/capital/withdraw/apply
 	withdraw, err := client.NewWithdrawService().Coin("BTC").Address("123123123").
@@ -25,5 +25,5 @@ func Withdraw() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(withdraw))
+	fmt.Println(binance.PrettyPrint(withdraw))
 }

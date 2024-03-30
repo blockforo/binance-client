@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetManagedSubAccountDepositAddress() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Get Managed Sub-account Deposit Address (For Investor Master Account) - /sapi/v1/managed-subaccount/deposit/address
 	GetManagedSubAccountDepositAddress, err := client.NewGetManagedSubAccountDepositAddressService().Email("from@email.com").
@@ -25,5 +25,5 @@ func GetManagedSubAccountDepositAddress() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(GetManagedSubAccountDepositAddress))
+	fmt.Println(binance.PrettyPrint(GetManagedSubAccountDepositAddress))
 }

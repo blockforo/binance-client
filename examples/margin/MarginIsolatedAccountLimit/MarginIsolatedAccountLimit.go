@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginIsolatedAccountLimit() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// MarginIsolatedAccountLimitService - /sapi/v1/margin/isolated/accountLimit
 	marginIsolatedAccountLimit, err := client.NewMarginIsolatedAccountLimitService().
@@ -25,5 +25,5 @@ func MarginIsolatedAccountLimit() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginIsolatedAccountLimit))
+	fmt.Println(binance.PrettyPrint(marginIsolatedAccountLimit))
 }

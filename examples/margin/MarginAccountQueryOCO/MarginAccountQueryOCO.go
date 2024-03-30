@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginAccountQueryOCO() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// MarginAccountQueryOCOService - /sapi/v1/margin/orderList
 	marginAccountQueryOCO, err := client.NewMarginAccountQueryOCOService().
@@ -25,5 +25,5 @@ func MarginAccountQueryOCO() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginAccountQueryOCO))
+	fmt.Println(binance.PrettyPrint(marginAccountQueryOCO))
 }

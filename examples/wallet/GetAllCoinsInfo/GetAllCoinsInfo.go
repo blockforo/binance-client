@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func AllCoinsInfo() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// GetAllCoinsInfoService - /sapi/v1/capital/config/getall
 	allCoinsInfo, err := client.NewGetAllCoinsInfoService().Do(context.Background())
@@ -24,5 +24,5 @@ func AllCoinsInfo() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(allCoinsInfo))
+	fmt.Println(binance.PrettyPrint(allCoinsInfo))
 }

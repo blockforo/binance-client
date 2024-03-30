@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func EnableLeverageTokenForSubAccount() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Enable Leverage Token for Sub-account (For Master Account) - /sapi/v1/sub-account/blvt/enable
 	enableLeverageTokenForSubAccount, err := client.NewEnableLeverageTokenForSubAccountService().Email("email@email.com").
@@ -25,5 +25,5 @@ func EnableLeverageTokenForSubAccount() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(enableLeverageTokenForSubAccount))
+	fmt.Println(binance.PrettyPrint(enableLeverageTokenForSubAccount))
 }

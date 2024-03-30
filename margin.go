@@ -3505,14 +3505,14 @@ func (s *MarginDustlogService) Do(ctx context.Context, opts ...RequestOption) (r
 }
 
 type MarginDustlogResponse struct {
-	Total              uint8               `json:"total"` //Total counts of exchange
+	Total              uint8               `json:"total"` // Total counts of exchange
 	UserAssetDribblets []UserAssetDribblet `json:"userAssetDribblets"`
 }
 
 // UserAssetDribblet represents one dust log row
 type UserAssetDribblet struct {
 	OperateTime              int64                     `json:"operateTime"`
-	TotalTransferedAmount    string                    `json:"totalTransferedAmount"`    // Total transfered BNB amount for this exchange.
+	TotalTransferredAmount   string                    `json:"totalTransferedAmount"`    // Total transfered BNB amount for this exchange.
 	TotalServiceChargeAmount string                    `json:"totalServiceChargeAmount"` // Total service charge amount for this exchange.
 	TransId                  int64                     `json:"transId"`
 	UserAssetDribbletDetails []UserAssetDribbletDetail `json:"userAssetDribbletDetails"` // Details of this exchange.
@@ -3524,7 +3524,7 @@ type UserAssetDribbletDetail struct {
 	ServiceChargeAmount string `json:"serviceChargeAmount"`
 	Amount              string `json:"amount"`
 	OperateTime         int64  `json:"operateTime"` // The time of this exchange.
-	TransferedAmount    string `json:"transferedAmount"`
+	TransferredAmount   string `json:"transferedAmount"`
 	FromAsset           string `json:"fromAsset"`
 }
 

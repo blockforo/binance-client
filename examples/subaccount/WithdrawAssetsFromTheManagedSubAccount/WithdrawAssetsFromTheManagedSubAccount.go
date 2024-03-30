@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func WithdrawAssetsFromTheManagedSubAccount() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	withdrawAssetsFromTheManagedSubAccount, err := client.NewWithdrawAssetsFromTheManagedSubAccountService().FromEmail("email@email.com").
 		Asset("BTC").Amount(1.5).TransferDate(123132123).Do(context.Background())
@@ -24,5 +24,5 @@ func WithdrawAssetsFromTheManagedSubAccount() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(withdrawAssetsFromTheManagedSubAccount))
+	fmt.Println(binance.PrettyPrint(withdrawAssetsFromTheManagedSubAccount))
 }

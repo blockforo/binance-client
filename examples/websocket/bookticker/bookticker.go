@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -11,9 +11,9 @@ func main() {
 }
 
 func WsBookTickerExample() {
-	websocketStreamClient := binance_connector.NewWebsocketStreamClient(false)
-	wsBookTickerHandler := func(event *binance_connector.WsBookTickerEvent) {
-		fmt.Println(binance_connector.PrettyPrint(event))
+	websocketStreamClient := binance.NewWebsocketStreamClient(false)
+	wsBookTickerHandler := func(event *binance.WsBookTickerEvent) {
+		fmt.Println(binance.PrettyPrint(event))
 	}
 	errHandler := func(err error) {
 		fmt.Println(err)
