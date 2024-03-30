@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func TestNewOrder() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Binance Test New Order endpoint - POST /api/v3/order/test
 	testNewOrder, err := client.NewTestNewOrder().Symbol("BTCUSDT").
@@ -26,5 +26,5 @@ func TestNewOrder() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(testNewOrder))
+	fmt.Println(binance.PrettyPrint(testNewOrder))
 }

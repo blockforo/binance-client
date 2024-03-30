@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetStakingProductPosition() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	stakingProductPosition, err := client.NewGetStakingProductPositionService().Product("STAKING").
 		Do(context.Background())
@@ -24,5 +24,5 @@ func GetStakingProductPosition() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(stakingProductPosition))
+	fmt.Println(binance.PrettyPrint(stakingProductPosition))
 }

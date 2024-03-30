@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginTransferForSubAccount() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Margin Transfer for Sub-account (For Master Account) - /sapi/v1/sub-account/margin/transfer
 	marginTransferForSubAccount, err := client.NewMarginTransferForSubAccountService().Email("from@email.com").Asset("BTC").
@@ -25,5 +25,5 @@ func MarginTransferForSubAccount() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginTransferForSubAccount))
+	fmt.Println(binance.PrettyPrint(marginTransferForSubAccount))
 }

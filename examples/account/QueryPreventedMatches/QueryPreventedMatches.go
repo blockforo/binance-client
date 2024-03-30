@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func QueryPreventedMatches() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Query Prevented Matches (USER_DATA) - GET /api/v3/preventedMatches
 	getQueryPreventedMatchesService, err := client.NewGetQueryPreventedMatchesService().
@@ -25,5 +25,5 @@ func QueryPreventedMatches() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getQueryPreventedMatchesService))
+	fmt.Println(binance.PrettyPrint(getQueryPreventedMatchesService))
 }

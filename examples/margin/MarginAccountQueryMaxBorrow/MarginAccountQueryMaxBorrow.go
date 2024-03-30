@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginAccountQueryMaxBorrow() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// MarginAccountQueryMaxBorrowService - /sapi/v1/margin/maxBorrowable
 	marginAccountQueryMaxBorrow, err := client.NewMarginAccountQueryMaxBorrowService().Asset("USDT").
@@ -25,5 +25,5 @@ func MarginAccountQueryMaxBorrow() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginAccountQueryMaxBorrow))
+	fmt.Println(binance.PrettyPrint(marginAccountQueryMaxBorrow))
 }

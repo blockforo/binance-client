@@ -1487,12 +1487,12 @@ func (s *QueryUniversalTransferHistoryService) Do(ctx context.Context, opts ...R
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
-		return
+		return res, err
 	}
 	res.Result = make([]*InternalUniversalTransfer, 0)
 	err = json.Unmarshal(data, &res)
 	if err != nil {
-		return
+		return res, err
 	}
 	return res, nil
 }
@@ -1783,6 +1783,8 @@ type GetFuturesPositionRiskOfSubAccountV2COINResp struct {
 }
 
 // Enable Leverage Token for Sub-account (For Master Account)
+//
+//nolint:gosec // It's detected as credentials
 const (
 	enableLeverageTokenForSubAccountEndpoint = "/sapi/v1/sub-account/blvt/enable"
 )
@@ -1829,7 +1831,8 @@ type EnableLeverageTokenForSubAccountResp struct {
 }
 
 // Get IP Restriction for a Sub-account API Key (For Master Account)
-
+//
+//nolint:gosec // It's detected as credentials
 const (
 	getIPRestrictionForSubAccountAPIKeyEndpoint = "/sapi/v1/sub-account/subaccountApi/ipRestriction"
 )
@@ -1880,7 +1883,8 @@ type GetIPRestrictionForSubAccountAPIKeyResp struct {
 }
 
 // Delete IP List For a Sub-account API Key (For Master Account)
-
+//
+//nolint:gosec // It's detected as credentials
 const (
 	deleteIPListForSubAccountAPIKeyEndpoint = "/sapi/v1/sub-account/subaccountApi/ipRestriction/ipList"
 )
@@ -1940,7 +1944,8 @@ type DeleteIPListForSubAccountAPIKeyResp struct {
 }
 
 // Update IP Restriction for Sub-Account API key (For Master Account)
-
+//
+//nolint:gosec // It's detected as credentials
 const (
 	updateIPRestrictionForSubAccountAPIKeyEndpoint = "/sapi/v2/sub-account/subaccountApi/ipRestriction"
 )
@@ -2105,7 +2110,7 @@ type QueryManagedSubAccountAssetDetailsResp struct {
 	} `json:"assetDetail"`
 }
 
-// Withdrawl Assets From The Managed Sub-account（For Investor Master Account）
+// Withdrawal Assets From The Managed Sub-account（For Investor Master Account）
 
 const (
 	withdrawAssetsFromTheManagedSubAccountEndpoint = "/sapi/v1/sub-account/managed-subaccount/withdraw"

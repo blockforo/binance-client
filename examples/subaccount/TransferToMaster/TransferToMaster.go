@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func TransferToMaster() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Transfer to Master (For Sub-account) - /sapi/v1/sub-account/transfer/subToMaster
 	transferToMaster, err := client.NewTransferToMasterService().Asset("BTC").
@@ -25,5 +25,5 @@ func TransferToMaster() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(transferToMaster))
+	fmt.Println(binance.PrettyPrint(transferToMaster))
 }

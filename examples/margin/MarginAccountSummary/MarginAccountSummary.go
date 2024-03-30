@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func MarginAccountSummary() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// MarginAccountSummaryService - /sapi/v1/margin/tradeCoeff
 	marginAccountSummary, err := client.NewMarginAccountSummaryService().Do(context.Background())
@@ -24,5 +24,5 @@ func MarginAccountSummary() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(marginAccountSummary))
+	fmt.Println(binance.PrettyPrint(marginAccountSummary))
 }

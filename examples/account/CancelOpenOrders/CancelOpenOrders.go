@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func CancelOpenOrders() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Binance Cancel all open orders on a symbol - DELETE /api/v3/openOrders
 	cancelOpenOrders, err := client.NewCancelOpenOrdersService().Symbol("BTCUSDT").
@@ -25,5 +25,5 @@ func CancelOpenOrders() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(cancelOpenOrders))
+	fmt.Println(binance.PrettyPrint(cancelOpenOrders))
 }

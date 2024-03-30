@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetSubAccountDepositHistory() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Get Sub-account Deposit History (For Master Account) - /sapi/v1/capital/deposit/subHisrec
 	getSubAccountDepositHistory, err := client.NewGetSubAccountDepositHistoryService().Email("from@email.com").
@@ -25,5 +25,5 @@ func GetSubAccountDepositHistory() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getSubAccountDepositHistory))
+	fmt.Println(binance.PrettyPrint(getSubAccountDepositHistory))
 }

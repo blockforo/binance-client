@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func HistoricalTradeLookup() {
 	apiKey := "your api key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, "", baseURL)
+	client := binance.NewClient(apiKey, "", baseURL)
 
 	historicalTradeLookup, err := client.NewHistoricalTradeLookupService().
 		Symbol("BTCUSDT").Do(context.Background())
@@ -23,5 +23,5 @@ func HistoricalTradeLookup() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(historicalTradeLookup))
+	fmt.Println(binance.PrettyPrint(historicalTradeLookup))
 }

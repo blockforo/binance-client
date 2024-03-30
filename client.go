@@ -14,8 +14,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/binance/binance-connector-go/handlers"
 	"github.com/bitly/go-simplejson"
+	"github.com/blockforo/binance-client/handlers"
 )
 
 // TimeInForceType define time in force type of order
@@ -59,24 +59,24 @@ func PrettyPrint(i interface{}) string {
 	return string(s)
 }
 
-func (c *Client) debug(format string, v ...interface{}) {
+func (c *Client) debugf(format string, v ...interface{}) {
 	if c.Debug {
 		c.Logger.Printf(format, v...)
 	}
 }
 
 // Create client function for initialising new Binance client
-func NewClient(apiKey string, secretKey string, baseURL ...string) *Client {
-	url := "https://api.binance.com"
+func NewClient(apiKey, secretKey string, baseURL ...string) *Client {
+	apiRUL := "https://api.binance.com"
 
 	if len(baseURL) > 0 {
-		url = baseURL[0]
+		apiRUL = baseURL[0]
 	}
 
 	return &Client{
 		APIKey:     apiKey,
 		SecretKey:  secretKey,
-		BaseURL:    url,
+		BaseURL:    apiRUL,
 		HTTPClient: http.DefaultClient,
 		Logger:     log.New(os.Stderr, Name, log.LstdFlags),
 	}
@@ -133,7 +133,7 @@ func (c *Client) parseRequest(r *request, opts ...RequestOption) (err error) {
 	if queryString != "" {
 		fullURL = fmt.Sprintf("%s?%s", fullURL, queryString)
 	}
-	c.debug("full url: %s, body: %s", fullURL, bodyString)
+	c.debugf("full url: %s, body: %s", fullURL, bodyString)
 	r.fullURL = fullURL
 	r.header = header
 	r.body = body
@@ -153,7 +153,7 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 	}
 	req = req.WithContext(ctx)
 	req.Header = r.header
-	c.debug("request: %#v", req)
+	c.debugf("request: %#v", req)
 	f := c.do
 	if f == nil {
 		f = c.HTTPClient.Do
@@ -174,15 +174,15 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 			err = cerr
 		}
 	}()
-	c.debug("response: %#v", res)
-	c.debug("response body: %s", string(data))
-	c.debug("response status code: %d", res.StatusCode)
+	c.debugf("response: %#v", res)
+	c.debugf("response body: %s", string(data))
+	c.debugf("response status code: %d", res.StatusCode)
 
 	if res.StatusCode >= http.StatusBadRequest {
 		apiErr := new(handlers.APIError)
 		e := json.Unmarshal(data, apiErr)
 		if e != nil {
-			c.debug("failed to unmarshal json: %s", e)
+			c.debugf("failed to unmarshal json: %s", e)
 		}
 		if r.endpoint != "/api/v3/order/cancelReplace" {
 			return nil, apiErr

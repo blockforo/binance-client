@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetFuturesPositionRiskOfSubAccountV2() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Get Futures Position-Risk of Sub-account V2 (For Master Account) - /sapi/v1/sub-account/futures/positionRisk
 	getFuturesPositionRiskOfSubAccountV2, err := client.NewGetFuturesPositionRiskOfSubAccountV2Service().Email("email@email.com").
@@ -25,5 +25,5 @@ func GetFuturesPositionRiskOfSubAccountV2() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getFuturesPositionRiskOfSubAccountV2))
+	fmt.Println(binance.PrettyPrint(getFuturesPositionRiskOfSubAccountV2))
 }

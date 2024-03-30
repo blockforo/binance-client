@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"os/signal"
@@ -18,6 +17,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 )
 
@@ -51,7 +51,7 @@ var (
 	WebsocketAPIKeepalive = true
 )
 
-func NewWebsocketAPIClient(apiKey string, apiSecret string, baseURL ...string) *WebsocketAPIClient {
+func NewWebsocketAPIClient(apiKey, apiSecret string, baseURL ...string) *WebsocketAPIClient {
 	// Set default base URL to production WS URL
 	url := "wss://ws-api.binance.com:443/ws-api/v3"
 
@@ -77,10 +77,12 @@ func (c *WebsocketAPIClient) Connect() error {
 	}
 	headers := http.Header{}
 	headers.Add("User-Agent", fmt.Sprintf("%s/%s", Name, Version))
-	conn, _, err := c.Dialer.Dial(c.Endpoint, headers)
+	conn, resp, err := c.Dialer.Dial(c.Endpoint, headers)
 	if err != nil {
 		return err
 	}
+
+	defer resp.Body.Close()
 
 	fmt.Println("Connected to Binance Websocket API")
 	c.Conn = conn
@@ -143,6 +145,7 @@ func (c *WebsocketAPIClient) RequestHandler(req interface{}, handler WsHandler, 
 	return stopCh, nil
 }
 
+//nolint:unparam // TODO: fix the linter later on - result `err` is always `nil`
 func wsApiServe(c *websocket.Conn, handler WsHandler, errHandler ErrHandler) (stopCh chan struct{}, err error) {
 	stopCh = make(chan struct{})
 	go func() {
@@ -170,7 +173,7 @@ func wsApiServe(c *websocket.Conn, handler WsHandler, errHandler ErrHandler) (st
 	return stopCh, nil
 }
 
-func websocketAPISignature(apiKey string, apiSecret string, parameters map[string]string) (map[string]string, error) {
+func websocketAPISignature(apiKey, apiSecret string, parameters map[string]string) (map[string]string, error) {
 	if apiKey == "" || apiSecret == "" {
 		return nil, &WebsocketClientError{
 			Message: "api_key and api_secret are required for websocket API signature",
@@ -202,24 +205,20 @@ func websocketAPISignature(apiKey string, apiSecret string, parameters map[strin
 	return parameters, nil
 }
 
-func hmacHashing(apiSecret string, data string) string {
+func hmacHashing(apiSecret, data string) string {
 	mac := hmac.New(sha256.New, []byte(apiSecret))
 	mac.Write([]byte(data))
 	return hex.EncodeToString(mac.Sum(nil))
 }
 
-func getUUID() string {
-	return fmt.Sprintf("%s-%s-%s-%s-%s", randomHex(8), randomHex(4), randomHex(4), randomHex(4), randomHex(12))
-}
+func getUUID() (string, error) {
+	id, err := uuid.NewRandom()
 
-func randomHex(n int) string {
-	rand.Seed(time.Now().UnixNano())
-	hexChars := "0123456789abcdef"
-	bytes := make([]byte, n)
-	for i := 0; i < n; i++ {
-		bytes[i] = hexChars[rand.Intn(len(hexChars))]
+	if err != nil {
+		return "", err
 	}
-	return string(bytes)
+
+	return id.String(), err
 }
 
 type WebsocketClientError struct {
@@ -235,7 +234,13 @@ type TestConnectivityService struct {
 }
 
 func (s *TestConnectivityService) Do(ctx context.Context) (*TestConnectivityResponse, error) {
-	id := getUUID()
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -245,7 +250,7 @@ func (s *TestConnectivityService) Do(ctx context.Context) (*TestConnectivityResp
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +283,13 @@ type CheckServerTimeService struct {
 }
 
 func (s *CheckServerTimeService) Do(ctx context.Context) (*CheckServerTimeResponse, error) {
-	id := getUUID()
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
 
 	payload := map[string]interface{}{
 		"id":     id,
@@ -288,7 +299,7 @@ func (s *CheckServerTimeService) Do(ctx context.Context) (*CheckServerTimeRespon
 	messageCh := make(chan []byte)
 	s.websocketAPI.ReqResponseMap[id] = messageCh
 
-	err := s.websocketAPI.SendMessage(payload)
+	err = s.websocketAPI.SendMessage(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -341,8 +352,16 @@ func (s *ExchangeInformationService) Permissions(permissions []string) *Exchange
 }
 
 func (s *ExchangeInformationService) Do(ctx context.Context) (*ExchangeInformationResponse, error) {
+	// Generate a random UUID
+	id, err := getUUID()
+
+	// Make sure it was generated correctly
+	if err != nil {
+		return nil, err
+	}
+
 	payload := map[string]interface{}{
-		"id":     getUUID(),
+		"id":     id,
 		"method": "exchangeInfo",
 	}
 

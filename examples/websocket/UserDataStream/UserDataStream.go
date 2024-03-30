@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func WsUserData() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	listenKey, err := client.NewCreateListenKeyService().
 		Do(context.Background())
@@ -25,10 +25,10 @@ func WsUserData() {
 		return
 	}
 
-	websocketStreamClient := binance_connector.NewWebsocketStreamClient(false)
+	websocketStreamClient := binance.NewWebsocketStreamClient(false)
 
-	wsUserDataHandler := func(event *binance_connector.WsUserDataEvent) {
-		fmt.Println(binance_connector.PrettyPrint(event))
+	wsUserDataHandler := func(event *binance.WsUserDataEvent) {
+		fmt.Println(binance.PrettyPrint(event))
 	}
 	errHandler := func(err error) {
 		fmt.Println(err)

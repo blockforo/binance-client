@@ -44,7 +44,7 @@ func (s *marketTestSuite) TestAggTradesList() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	symbol := "LTCBTC"
+	symbol := BNBBTC
 	fromID := int(1)
 	startTime := uint64(1498793709153)
 	endTime := uint64(1498793709156)
@@ -192,7 +192,7 @@ func (s *marketTestSuite) TestRecentTrades() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	symbol := "LTCBTC"
+	symbol := BNBBTC
 	limit := 3
 	s.assertReq(func(r *request) {
 		e := newRequest().setParams(params{
@@ -244,20 +244,20 @@ func (s *marketTestSuite) TestHistoricalTrades() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	symbol := "LTCBTC"
+	symbol := BNBBTC
 	limit := uint(3)
-	fromId := int64(1)
+	fromID := int64(1)
 	s.assertReq(func(r *request) {
 		e := newRequest().setParams(params{
 			"symbol": symbol,
 			"limit":  limit,
-			"fromId": fromId,
+			"fromId": fromID,
 		})
 		s.assertRequestEqual(e, r)
 	})
 
 	trades, err := s.client.NewHistoricalTradeLookupService().Symbol(symbol).
-		Limit(limit).FromId(fromId).Do(newContext())
+		Limit(limit).FromID(fromID).Do(newContext())
 	r := s.r()
 	r.NoError(err)
 	r.Len(trades, 1)
@@ -281,7 +281,7 @@ func (s *marketTestSuite) TestAveragePrice() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	symbol := "LTCBTC"
+	symbol := BNBBTC
 	s.assertReq(func(r *request) {
 		e := newRequest().setParam("symbol", symbol)
 		s.assertRequestEqual(e, r)

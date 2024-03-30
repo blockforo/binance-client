@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetMyTrades() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Binance Get trades for a specific account and symbol (USER_DATA) - GET /api/v3/myTrades
 	getMyTradesService, err := client.NewGetMyTradesService().
@@ -25,5 +25,5 @@ func GetMyTrades() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getMyTradesService))
+	fmt.Println(binance.PrettyPrint(getMyTradesService))
 }

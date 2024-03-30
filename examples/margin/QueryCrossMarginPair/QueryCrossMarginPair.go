@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func QueryCrossMarginPair() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// QueryCrossMarginPairService - /sapi/v1/margin/pair
 	queryCrossMarginPair, err := client.NewQueryCrossMarginPairService().Symbol("BTCUSDT").
@@ -25,5 +25,5 @@ func QueryCrossMarginPair() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(queryCrossMarginPair))
+	fmt.Println(binance.PrettyPrint(queryCrossMarginPair))
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 func RecentTradesList() {
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient("", "", baseURL)
+	client := binance.NewClient("", "", baseURL)
 
 	// RecentTradesList
 	recentTradesList, err := client.NewRecentTradesListService().
@@ -23,5 +23,5 @@ func RecentTradesList() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(recentTradesList))
+	fmt.Println(binance.PrettyPrint(recentTradesList))
 }

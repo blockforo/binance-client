@@ -7,6 +7,8 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+const fakeError = "fake error"
+
 type websocketTestSuite struct {
 	baseTestSuite
 	origWsServe func(*WsConfig, WsHandler, ErrHandler) (chan struct{}, chan struct{}, error)
@@ -43,12 +45,8 @@ func (s *websocketTestSuite) mockWsServe(data []byte, err error) {
 	}
 }
 
-func (s *websocketTestSuite) assertWsServe(count ...int) {
-	e := 1
-	if len(count) > 0 {
-		e = count[0]
-	}
-	s.r().Equal(e, s.serveCount)
+func (s *websocketTestSuite) assertWsServe() {
+	s.r().Equal(1, s.serveCount)
 }
 
 func (s *websocketTestSuite) assertUserDataEvent(e, a *WsUserDataEvent) {
@@ -57,9 +55,11 @@ func (s *websocketTestSuite) assertUserDataEvent(e, a *WsUserDataEvent) {
 	r.Equal(e.Time, a.Time, "Time")
 	r.Equal(e.TransactionTime, a.TransactionTime, "TransactionTime")
 	r.Equal(e.AccountUpdateTime, a.AccountUpdateTime, "AccountUpdateTime")
+	var update WsAccountUpdate
 	for i, e := range e.AccountUpdate.WsAccountUpdates {
+		update = e
 		a := a.AccountUpdate.WsAccountUpdates[i]
-		s.assertAccountUpdate(&e, &a)
+		s.assertAccountUpdate(&update, &a)
 	}
 	s.assertOrderUpdate(&e.OrderUpdate, &a.OrderUpdate)
 	s.assertBalanceUpdate(&e.BalanceUpdate, &a.BalanceUpdate)
@@ -68,14 +68,13 @@ func (s *websocketTestSuite) assertUserDataEvent(e, a *WsUserDataEvent) {
 func (s *websocketTestSuite) testWsUserDataServe(data []byte, expectedEvent *WsUserDataEvent) {
 	websocketStreamClient := NewWebsocketStreamClient(false, "wss://testnet.binance.vision")
 
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsUserDataServe("listenKey", func(event *WsUserDataEvent) {
 		s.assertUserDataEvent(expectedEvent, event)
 	}, func(err error) {
-		s.r().EqualError(err, fakeErrMsg)
+		s.r().EqualError(err, fakeError)
 	})
 
 	s.r().NoError(err)
@@ -173,8 +172,8 @@ func (s *websocketTestSuite) TestWsTradeServe() {
         "m": true,
         "M": true
     }`)
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsTradeServe("BNBBTC", func(event *WsTradeEvent) {
@@ -192,7 +191,7 @@ func (s *websocketTestSuite) TestWsTradeServe() {
 		}
 		s.assertWsTradeEventEqual(e, event)
 	}, func(err error) {
-		s.r().EqualError(err, fakeErrMsg)
+		s.r().EqualError(err, fakeError)
 	})
 	s.r().NoError(err)
 	stopC <- struct{}{}
@@ -236,8 +235,8 @@ func (s *websocketTestSuite) TestWsAllMarketMiniTickersStatServe() {
     	"v": "456266.78000000",
     	"q": "11873.11095682"
 	}]`)
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsAllMarketMiniTickersStatServe(func(event WsAllMarketMiniTickersStatEvent) {
@@ -267,7 +266,7 @@ func (s *websocketTestSuite) TestWsAllMarketMiniTickersStatServe() {
 		}
 		s.assertWsAllMarketMiniTickersStatEventEqual(e, event)
 	}, func(err error) {
-		s.r().EqualError(err, fakeErrMsg)
+		s.r().EqualError(err, fakeError)
 	})
 	s.r().NoError(err)
 	stopC <- struct{}{}
@@ -303,8 +302,8 @@ func (s *websocketTestSuite) TestBookTickerServe() {
   		"a":"9548.5",
   		"A":"11"
 	  }`)
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsBookTickerServe("BTCUSD_200626", func(event *WsBookTickerEvent) {
@@ -319,7 +318,7 @@ func (s *websocketTestSuite) TestBookTickerServe() {
 		s.assertWsBookTickerEvent(e, event)
 	},
 		func(err error) {
-			s.r().EqualError(err, fakeErrMsg)
+			s.r().EqualError(err, fakeError)
 		})
 
 	s.r().NoError(err)
@@ -370,8 +369,8 @@ func (s *websocketTestSuite) TestDepthServe() {
             ]
         ]
     }`)
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsDepthServe("ETHBTC", func(event *WsDepthEvent) {
@@ -404,7 +403,7 @@ func (s *websocketTestSuite) TestDepthServe() {
 		}
 		s.assertWsDepthEventEqual(e, event)
 	}, func(err error) {
-		s.r().EqualError(err, fakeErrMsg)
+		s.r().EqualError(err, fakeError)
 	})
 	s.r().NoError(err)
 	stopC <- struct{}{}
@@ -454,8 +453,8 @@ func (s *websocketTestSuite) TestKlineServe() {
             "B": "13279784.01349473"
         }
     }`)
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsKlineServe("ETHBTC", "1m", func(event *WsKlineEvent) {
@@ -484,7 +483,7 @@ func (s *websocketTestSuite) TestKlineServe() {
 		}
 		s.assertWsKlineEventEqual(e, event)
 	}, func(err error) {
-		s.r().EqualError(err, fakeErrMsg)
+		s.r().EqualError(err, fakeError)
 	})
 	s.r().NoError(err)
 	stopC <- struct{}{}
@@ -530,8 +529,8 @@ func (s *websocketTestSuite) TestWsAggTradeServe() {
         "m": false,
         "M": true
     }`)
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsAggTradeServe("ETHBTC", func(event *WsAggTradeEvent) {
@@ -549,7 +548,7 @@ func (s *websocketTestSuite) TestWsAggTradeServe() {
 		}
 		s.assertWsAggTradeEventEqual(e, event)
 	}, func(err error) {
-		s.r().EqualError(err, fakeErrMsg)
+		s.r().EqualError(err, fakeError)
 	})
 	s.r().NoError(err)
 	stopC <- struct{}{}
@@ -621,8 +620,8 @@ func (s *websocketTestSuite) TestWsAllMarketTickersStatServe() {
   		"L": 18150,
   		"n": 18151
 	}]`)
-	fakeErrMsg := "fake error"
-	s.mockWsServe(data, errors.New(fakeErrMsg))
+
+	s.mockWsServe(data, errors.New(fakeError))
 	defer s.assertWsServe()
 
 	doneC, stopC, err := websocketStreamClient.WsAllMarketTickersStatServe(func(event WsAllMarketTickersStatEvent) {
@@ -680,7 +679,7 @@ func (s *websocketTestSuite) TestWsAllMarketTickersStatServe() {
 		}
 		s.assertWsAllMarketTickersStatEventEqual(e, event)
 	}, func(err error) {
-		s.r().EqualError(err, fakeErrMsg)
+		s.r().EqualError(err, fakeError)
 	})
 	s.r().NoError(err)
 	stopC <- struct{}{}

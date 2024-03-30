@@ -21,7 +21,7 @@ func (s *marginTestSuite) TestTransfer() {
 	}`)
 	s.mockDo(data, nil)
 	defer s.assertDo()
-	asset := "BTC"
+	asset := BTC
 	amount := 1.000
 	transferType := 1
 	s.assertReq(func(r *request) {
@@ -51,7 +51,7 @@ func (s *marginTestSuite) TestLoan() {
 	}`)
 	s.mockDo(data, nil)
 	defer s.assertDo()
-	asset := "BTC"
+	asset := BTC
 	amount := 1.000
 	s.assertReq(func(r *request) {
 		e := newSignedRequest().setParams(params{
@@ -79,7 +79,7 @@ func (s *marginTestSuite) TestRepay() {
 	}`)
 	s.mockDo(data, nil)
 	defer s.assertDo()
-	asset := "BTC"
+	asset := BTC
 	amount := 1.000
 	s.assertReq(func(r *request) {
 		e := newSignedRequest().setParams(params{
@@ -221,14 +221,14 @@ func (s *marginTestSuite) TestGetIsolatedMarginAllPairs() {
 		{
 			Symbol:        "BNBBTC",
 			Base:          "BNB",
-			Quote:         "BTC",
+			Quote:         BTC,
 			IsMarginTrade: true,
 			IsBuyAllowed:  true,
 			IsSellAllowed: true,
 		}, {
 			Symbol:        "TRXBTC",
 			Base:          "TRX",
-			Quote:         "BTC",
+			Quote:         BTC,
 			IsMarginTrade: true,
 			IsBuyAllowed:  true,
 			IsSellAllowed: true,
@@ -326,14 +326,14 @@ func (s *marginTestSuite) TestGetAllMarginAssets() {
 	s.r().NoError(err)
 	s.Len(resp.AssetDetailList, 2)
 	s.Equal("Bitcoin", resp.AssetDetailList[0].AssetFullName)
-	s.Equal("BTC", resp.AssetDetailList[0].AssetName)
+	s.Equal(BTC, resp.AssetDetailList[0].AssetName)
 	s.True(resp.AssetDetailList[0].IsBorrowable)
 	s.True(resp.AssetDetailList[0].IsMortgageable)
 	s.Equal("0.00010000", resp.AssetDetailList[0].MinLoanAmt)
 	s.Equal("100000.00000000", resp.AssetDetailList[0].MaxLoanAmt)
 	s.Equal("0.00010000", resp.AssetDetailList[0].MinMortgageAmt)
 	s.Equal("100000.00000000", resp.AssetDetailList[0].MaxMortgageAmt)
-	s.Equal("BTC", resp.AssetDetailList[0].Asset)
+	s.Equal(BTC, resp.AssetDetailList[0].Asset)
 }
 
 func (s *marginTestSuite) TestForceLiquidationRecordService() {
@@ -442,7 +442,7 @@ func (s *marginTestSuite) TestInterestHistory() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewInterestHistoryService().
-		Asset("BTC").
+		Asset(BTC).
 		IsolatedSymbol("BTCUSDT").
 		StartTime(1613450271000).
 		EndTime(1613536671000).
@@ -454,8 +454,8 @@ func (s *marginTestSuite) TestInterestHistory() {
 	s.r().NoError(err)
 	s.Len(resp.Rows, 1)
 	s.Equal(uint64(1613450271000), resp.Rows[0].InterestAccruedTime)
-	s.Equal("BTC", resp.Rows[0].Asset)
-	s.Equal("BTC", resp.Rows[0].RawAsset)
+	s.Equal(BTC, resp.Rows[0].Asset)
+	s.Equal(BTC, resp.Rows[0].RawAsset)
 	s.Equal("1.00000000", resp.Rows[0].Principal)
 	s.Equal("0.00000005", resp.Rows[0].Interest)
 	s.Equal("0.00000100", resp.Rows[0].InterestRate)
@@ -485,7 +485,7 @@ func (s *marginTestSuite) TestLoanRecord() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewLoanRecordService().
-		Asset("BTC").
+		Asset(BTC).
 		IsolatedSymbol("BTCUSDT").
 		StartTime(1613450271000).
 		EndTime(1613536671000).
@@ -497,7 +497,7 @@ func (s *marginTestSuite) TestLoanRecord() {
 	s.r().NoError(err)
 	s.Len(resp.Rows, 1)
 	s.Equal("", resp.Rows[0].IsolatedSymbol)
-	s.Equal("BTC", resp.Rows[0].Asset)
+	s.Equal(BTC, resp.Rows[0].Asset)
 	s.Equal("1.00000000", resp.Rows[0].Principal)
 	s.Equal(uint64(1613450271000), resp.Rows[0].Timestamp)
 	s.Equal("CONFIRMED", resp.Rows[0].Status)
@@ -907,7 +907,7 @@ func (s *marginTestSuite) TestMarginAccountOrder() {
 
 	resp, err := s.client.NewMarginAccountOrderService().
 		Symbol("BTCUSDT").
-		IsIsolated("BTC").
+		IsIsolated(BTC).
 		OrderId(12345).
 		OrigClientOrderId("myclientorderid").
 		Do(context.Background())
@@ -1116,7 +1116,7 @@ func (s *marginTestSuite) TestMarginCrossCollateralRatio() {
 	s.Equal("20000", resp[0].Collaterals[1].MaxUsdValue)
 	s.Equal("0.8500", resp[0].Collaterals[1].DiscountRate)
 	s.Len(resp[0].AssetNames, 2)
-	s.Equal("BTC", resp[0].AssetNames[0].Asset)
+	s.Equal(BTC, resp[0].AssetNames[0].Asset)
 	s.Equal("ETH", resp[0].AssetNames[1].Asset)
 }
 
@@ -1140,14 +1140,14 @@ func (s *marginTestSuite) TestMarginCrossMarginFee() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewMarginCrossMarginFeeService().
-		Coin("BTC").
+		Coin(BTC).
 		VipLevel(0).
 		Do(context.Background())
 
 	s.r().NoError(err)
 	s.Len(resp, 1)
 	s.Equal(0, resp[0].VIPLevel)
-	s.Equal("BTC", resp[0].Coin)
+	s.Equal(BTC, resp[0].Coin)
 	s.True(resp[0].TransferIn)
 	s.True(resp[0].Borrowable)
 	s.Equal("0.00001000", resp[0].DailyInterest)
@@ -1258,7 +1258,7 @@ func (s *marginTestSuite) TestListDustLog() {
 	s.Len(rows[1].UserAssetDribbletDetails, 2)
 
 	s.assertUserAssetDribbletEqual(&UserAssetDribblet{
-		TotalTransferedAmount:    "0.00132256",
+		TotalTransferredAmount:   "0.00132256",
 		TotalServiceChargeAmount: "0.00002699",
 		TransId:                  45178372831,
 		UserAssetDribbletDetails: []UserAssetDribbletDetail{
@@ -1267,7 +1267,7 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.000009",
 				Amount:              "0.0009",
 				OperateTime:         1615985535000,
-				TransferedAmount:    "0.000441",
+				TransferredAmount:   "0.000441",
 				FromAsset:           "USDT",
 			},
 			{
@@ -1275,13 +1275,13 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.00001799",
 				Amount:              "0.0009",
 				OperateTime:         1615985535000,
-				TransferedAmount:    "0.00088156",
+				TransferredAmount:   "0.00088156",
 				FromAsset:           "ETH",
 			},
 		},
 	}, &rows[0])
 	s.assertUserAssetDribbletEqual(&UserAssetDribblet{
-		TotalTransferedAmount:    "0.00058795",
+		TotalTransferredAmount:   "0.00058795",
 		TotalServiceChargeAmount: "0.000012",
 		TransId:                  4357015,
 		UserAssetDribbletDetails: []UserAssetDribbletDetail{
@@ -1290,7 +1290,7 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.00001",
 				Amount:              "0.001",
 				OperateTime:         1616203180000,
-				TransferedAmount:    "0.00049",
+				TransferredAmount:   "0.00049",
 				FromAsset:           "USDT",
 			},
 			{
@@ -1298,7 +1298,7 @@ func (s *marginTestSuite) TestListDustLog() {
 				ServiceChargeAmount: "0.000002",
 				Amount:              "0.0001",
 				OperateTime:         1616203180000,
-				TransferedAmount:    "0.00009795",
+				TransferredAmount:   "0.00009795",
 				FromAsset:           "ETH",
 			},
 		},
@@ -1308,7 +1308,7 @@ func (s *marginTestSuite) TestListDustLog() {
 
 func (s *marginTestSuite) assertUserAssetDribbletEqual(e, a *UserAssetDribblet) {
 	r := s.r()
-	r.Equal(e.TotalTransferedAmount, a.TotalTransferedAmount, `TotalTransferedAmount`)
+	r.Equal(e.TotalTransferredAmount, a.TotalTransferredAmount, `TotalTransferedAmount`)
 	r.Equal(e.TotalServiceChargeAmount, a.TotalServiceChargeAmount, `TotalServiceChargeAmount`)
 	r.Equal(e.TransId, a.TransId, `TransID`)
 	s.assertUserAssetDribbletDetailEqual(&e.UserAssetDribbletDetails[0], &a.UserAssetDribbletDetails[0])
@@ -1322,7 +1322,7 @@ func (s *marginTestSuite) assertUserAssetDribbletDetailEqual(e, a *UserAssetDrib
 	r.Equal(e.ServiceChargeAmount, a.ServiceChargeAmount, `ServiceChargeAmount`)
 	r.Equal(e.Amount, a.Amount, `Amount`)
 	r.Equal(e.OperateTime, a.OperateTime, `OperateTime`)
-	r.Equal(e.TransferedAmount, a.TransferedAmount, `TransferedAmount`)
+	r.Equal(e.TransferredAmount, a.TransferredAmount, `TransferedAmount`)
 	r.Equal(e.FromAsset, a.FromAsset, `FromAsset`)
 }
 
@@ -1348,7 +1348,7 @@ func (s *marginTestSuite) TestMarginInterestRateHistory() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewMarginInterestRateHistoryService().
-		Asset("BTC").
+		Asset(BTC).
 		VipLevel(0).
 		StartTime(1616697600000).
 		EndTime(1616784000000).
@@ -1356,7 +1356,7 @@ func (s *marginTestSuite) TestMarginInterestRateHistory() {
 
 	s.r().NoError(err)
 	s.Len(resp, 2)
-	s.Equal("BTC", resp[0].Asset)
+	s.Equal(BTC, resp[0].Asset)
 	s.Equal(0.00025, resp[0].DailyInterestRate)
 	s.Equal(uint64(1616697600000), resp[0].Timestamp)
 	s.Equal(0, resp[0].VIPLevel)
@@ -1503,10 +1503,10 @@ func (s *marginTestSuite) TestMarginIsolatedAccountTransfer() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewMarginIsolatedAccountTransferService().
-		Asset("BTC").
+		Asset(BTC).
 		Symbol("BTCUSDT").
-		TransFrom("BTC").
-		TransTo("USDT").
+		TransFrom(BTC).
+		TransTo(USDT).
 		Amount(1.0).
 		Do(context.Background())
 
@@ -1547,8 +1547,8 @@ func (s *marginTestSuite) TestMarginIsolatedAccountTransferHistory() {
 
 	resp, err := s.client.NewMarginIsolatedAccountTransferHistoryService().
 		Symbol("BTCUSDT").
-		Asset("BTC").
-		TransFrom("BTC").
+		Asset(BTC).
+		TransFrom(BTC).
 		TransTo("ETH").
 		StartTime(1527777532000).
 		EndTime(1527777532000).
@@ -1559,19 +1559,19 @@ func (s *marginTestSuite) TestMarginIsolatedAccountTransferHistory() {
 
 	s.r().NoError(err)
 	s.Len(resp.Rows, 2)
-	s.Equal("BTC", resp.Rows[0].Asset)
+	s.Equal(BTC, resp.Rows[0].Asset)
 	s.Equal("1.0", resp.Rows[0].Amount)
 	s.Equal("CONFIRMED", resp.Rows[0].Status)
 	s.Equal(uint64(1527777532000), resp.Rows[0].TimeStamp)
 	s.Equal(int64(100000001), resp.Rows[0].TxId)
 	s.Equal("ETH", resp.Rows[0].TransFrom)
-	s.Equal("BTC", resp.Rows[0].TransTo)
-	s.Equal("BTC", resp.Rows[1].Asset)
+	s.Equal(BTC, resp.Rows[0].TransTo)
+	s.Equal(BTC, resp.Rows[1].Asset)
 	s.Equal("2.0", resp.Rows[1].Amount)
 	s.Equal("CONFIRMED", resp.Rows[1].Status)
 	s.Equal(uint64(1527777532000), resp.Rows[1].TimeStamp)
 	s.Equal(int64(100000002), resp.Rows[1].TxId)
-	s.Equal("BTC", resp.Rows[1].TransFrom)
+	s.Equal(BTC, resp.Rows[1].TransFrom)
 	s.Equal("ETH", resp.Rows[1].TransTo)
 	s.Equal(int64(2), resp.Total)
 }
@@ -1616,14 +1616,14 @@ func (s *marginTestSuite) TestMarginIsolatedMarginFee() {
 	s.Equal(0, resp[0].VIPLevel)
 	s.Equal("BTCUSDT", resp[0].Symbol)
 	s.Equal("3", resp[0].Leverage)
-	s.Equal("BTC", resp[0].Data.Coin)
+	s.Equal(BTC, resp[0].Data.Coin)
 	s.Equal("0.0015", resp[0].Data.DailyInterest)
 	s.Equal("1.00000000", resp[0].Data.BorrowLimit)
 
 	s.Equal(1, resp[1].VIPLevel)
 	s.Equal("BTCUSDT", resp[1].Symbol)
 	s.Equal("5", resp[1].Leverage)
-	s.Equal("BTC", resp[1].Data.Coin)
+	s.Equal(BTC, resp[1].Data.Coin)
 	s.Equal("0.0014", resp[1].Data.DailyInterest)
 	s.Equal("2.00000000", resp[1].Data.BorrowLimit)
 }
@@ -1681,8 +1681,8 @@ func (s *marginTestSuite) TestMarginIsolatedSymbol() {
 
 	s.r().NoError(err)
 	s.Equal("BTCUSDT", resp.Symbol)
-	s.Equal("BTC", resp.Base)
-	s.Equal("USDT", resp.Quote)
+	s.Equal(BTC, resp.Base)
+	s.Equal(USDT, resp.Quote)
 	s.True(resp.IsMarginTrade)
 	s.True(resp.IsBuyAllowed)
 	s.True(resp.IsSellAllowed)
@@ -1694,7 +1694,7 @@ func (s *marginTestSuite) TestMarginSmallLiabilityExchange() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewMarginSmallLiabilityExchangeService().
-		AssetNames("BTC").
+		AssetNames(BTC).
 		Do(context.Background())
 
 	s.r().NoError(err)
@@ -1726,7 +1726,7 @@ func (s *marginTestSuite) TestMarginSmallLiabilityExchangeCoinList() {
 
 	s.r().NoError(err)
 	s.Len(resp, 2)
-	s.Equal("BTC", resp[0].Asset)
+	s.Equal(BTC, resp[0].Asset)
 	s.Equal("0.00000005", resp[0].Interest)
 	s.Equal("1.00000000", resp[0].Principal)
 	s.Equal("0.00000000", resp[0].LiabilityOfBUSD)
@@ -1767,7 +1767,7 @@ func (s *marginTestSuite) TestMarginSmallLiabilityExchangeHistory() {
 	s.Len(resp, 1)
 	s.Equal(1, resp[0].Total)
 	s.Len(resp[0].Rows, 1)
-	s.Equal("BTC", resp[0].Rows[0].Asset)
+	s.Equal(BTC, resp[0].Rows[0].Asset)
 	s.Equal("1.00000000", resp[0].Rows[0].Amount)
 	s.Equal("USDT", resp[0].Rows[0].TargetAsset)
 	s.Equal("50000.00000000", resp[0].Rows[0].TargetAmount)
@@ -1831,12 +1831,12 @@ func (s *marginTestSuite) TestQueryMarginAsset() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewQueryMarginAssetService().
-		Asset("BTC").
+		Asset(BTC).
 		Do(context.Background())
 
 	s.r().NoError(err)
 	s.Equal("Bitcoin", resp.FullName)
-	s.Equal("BTC", resp.Name)
+	s.Equal(BTC, resp.Name)
 	s.True(resp.Borrowable)
 	s.True(resp.Mortgageable)
 	s.Equal("0.00100000", resp.UserMinBorrow)
@@ -1866,7 +1866,7 @@ func (s *marginTestSuite) TestRepayRecord() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewRepayRecordService().
-		Asset("BTC").
+		Asset(BTC).
 		IsolatedSymbol("BTCUSDT").
 		StartTime(1613450271000).
 		EndTime(1613536671000).
@@ -1879,7 +1879,7 @@ func (s *marginTestSuite) TestRepayRecord() {
 	s.Len(resp.Rows, 1)
 	s.Equal("BTCUSDT", resp.Rows[0].IsolatedSymbol)
 	s.Equal("1.00000000", resp.Rows[0].Amount)
-	s.Equal("BTC", resp.Rows[0].Asset)
+	s.Equal(BTC, resp.Rows[0].Asset)
 	s.Equal("0.00000005", resp.Rows[0].Interest)
 	s.Equal("1.00000000", resp.Rows[0].Principal)
 	s.Equal("CONFIRMED", resp.Rows[0].Status)

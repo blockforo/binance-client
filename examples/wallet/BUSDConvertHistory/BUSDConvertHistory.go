@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func BUSDConvertHistory() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// BUSDConvertHistoryService - /sapi/v1/asset/convert-transfer/queryByPage
 	bUSDConvertHistory, err := client.NewBUSDConvertHistoryService().
@@ -25,5 +25,5 @@ func BUSDConvertHistory() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(bUSDConvertHistory))
+	fmt.Println(binance.PrettyPrint(bUSDConvertHistory))
 }

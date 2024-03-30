@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func DustTransfer() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// DustTransferService - /sapi/v1/asset/dust
 	dustTransfer, err := client.NewDustTransferService().Asset([]string{"ETH", "LTC", "TRX"}).
@@ -25,5 +25,5 @@ func DustTransfer() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(dustTransfer))
+	fmt.Println(binance.PrettyPrint(dustTransfer))
 }

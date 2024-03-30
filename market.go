@@ -239,7 +239,7 @@ type HistoricalTradeLookup struct {
 	c      *Client
 	symbol string
 	limit  *uint
-	fromId *int64
+	fromID *int64
 }
 
 // Symbol set symbol
@@ -254,9 +254,9 @@ func (s *HistoricalTradeLookup) Limit(limit uint) *HistoricalTradeLookup {
 	return s
 }
 
-// FromId set fromId
-func (s *HistoricalTradeLookup) FromId(fromId int64) *HistoricalTradeLookup {
-	s.fromId = &fromId
+// FromID set fromID
+func (s *HistoricalTradeLookup) FromID(fromID int64) *HistoricalTradeLookup {
+	s.fromID = &fromID
 	return s
 }
 
@@ -271,8 +271,8 @@ func (s *HistoricalTradeLookup) Do(ctx context.Context, opts ...RequestOption) (
 	if s.limit != nil {
 		r.setParam("limit", *s.limit)
 	}
-	if s.fromId != nil {
-		r.setParam("fromId", *s.fromId)
+	if s.fromID != nil {
+		r.setParam("fromId", *s.fromID)
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
@@ -290,7 +290,7 @@ type AggTradesList struct {
 	c         *Client
 	symbol    string
 	limit     *int
-	fromId    *int
+	fromID    *int
 	startTime *uint64
 	endTime   *uint64
 }
@@ -307,9 +307,9 @@ func (s *AggTradesList) Limit(limit int) *AggTradesList {
 	return s
 }
 
-// FromId set fromId
-func (s *AggTradesList) FromId(fromId int) *AggTradesList {
-	s.fromId = &fromId
+// FromID set fromID
+func (s *AggTradesList) FromId(fromID int) *AggTradesList {
+	s.fromID = &fromID
 	return s
 }
 
@@ -336,8 +336,8 @@ func (s *AggTradesList) Do(ctx context.Context, opts ...RequestOption) (res []*A
 	if s.limit != nil {
 		r.setParam("limit", *s.limit)
 	}
-	if s.fromId != nil {
-		r.setParam("fromId", *s.fromId)
+	if s.fromID != nil {
+		r.setParam("fromId", *s.fromID)
 	}
 	if s.startTime != nil {
 		r.setParam("startTime", *s.startTime)
@@ -437,10 +437,10 @@ func (s *Klines) Do(ctx context.Context, opts ...RequestOption) (res []*KlinesRe
 	var klines []*KlinesResponse
 	for _, kline := range klinesResponseArray {
 		openTime := kline[0].(float64)
-		open := kline[1].(string)
+		opening := kline[1].(string)
 		high := kline[2].(string)
 		low := kline[3].(string)
-		close := kline[4].(string)
+		closing := kline[4].(string)
 		volume := kline[5].(string)
 		closeTime := kline[6].(float64)
 		quoteAssetVolume := kline[7].(string)
@@ -451,10 +451,10 @@ func (s *Klines) Do(ctx context.Context, opts ...RequestOption) (res []*KlinesRe
 		// create a KlinesResponse struct using the parsed fields
 		klinesResponse := &KlinesResponse{
 			OpenTime:                 uint64(openTime),
-			Open:                     open,
+			Open:                     opening,
 			High:                     high,
 			Low:                      low,
-			Close:                    close,
+			Close:                    closing,
 			Volume:                   volume,
 			CloseTime:                uint64(closeTime),
 			QuoteAssetVolume:         quoteAssetVolume,
@@ -554,10 +554,10 @@ func (s *UiKlines) Do(ctx context.Context, opts ...RequestOption) (res []*UiKlin
 	var uiklines []*UiKlinesResponse
 	for _, uikline := range uiklinesResponseArray {
 		openTime := uikline[0].(float64)
-		open := uikline[1].(string)
+		opening := uikline[1].(string)
 		high := uikline[2].(string)
 		low := uikline[3].(string)
-		close := uikline[4].(string)
+		closing := uikline[4].(string)
 		volume := uikline[5].(string)
 		closeTime := uikline[6].(float64)
 		quoteAssetVolume := uikline[7].(string)
@@ -568,10 +568,10 @@ func (s *UiKlines) Do(ctx context.Context, opts ...RequestOption) (res []*UiKlin
 		// create a KlinesResponse struct using the parsed fields
 		uiklinesResponse := &UiKlinesResponse{
 			OpenTime:                 uint64(openTime),
-			Open:                     open,
+			Open:                     opening,
 			High:                     high,
 			Low:                      low,
-			Close:                    close,
+			Close:                    closing,
 			Volume:                   volume,
 			CloseTime:                uint64(closeTime),
 			QuoteAssetVolume:         quoteAssetVolume,

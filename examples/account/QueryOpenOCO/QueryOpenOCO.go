@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func QueryOpenOCO() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Binance Query open OCO (USER_DATA) - GET /api/v3/openOrderList
 	queryOpenOCO, err := client.NewQueryOpenOCOService().Do(context.Background())
@@ -24,5 +24,5 @@ func QueryOpenOCO() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(queryOpenOCO))
+	fmt.Println(binance.PrettyPrint(queryOpenOCO))
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 func Ping() {
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient("", "", baseURL)
+	client := binance.NewClient("", "", baseURL)
 
 	// NewPingService
 	ping := client.NewPingService().Do(context.Background())
@@ -22,5 +22,5 @@ func Ping() {
 		fmt.Println("Success")
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(ping))
+	fmt.Println(binance.PrettyPrint(ping))
 }

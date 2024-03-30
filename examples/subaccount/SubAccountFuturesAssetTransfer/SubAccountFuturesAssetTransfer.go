@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func SubAccountFuturesAssetTransfer() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Sub-account Futures Asset Transfer (For Master Account) - /sapi/v1/sub-account/futures/internalTransfer
 	subaccountFuturesAssetTransfer, err := client.NewSubAccountFuturesAssetTransferService().FromEmail("from@email.com").
@@ -25,5 +25,5 @@ func SubAccountFuturesAssetTransfer() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(subaccountFuturesAssetTransfer))
+	fmt.Println(binance.PrettyPrint(subaccountFuturesAssetTransfer))
 }

@@ -17,12 +17,12 @@ type PriceLevel struct {
 // Parse parses this PriceLevel's Price and Quantity and
 // returns them both.  It also returns an error if either
 // fails to parse.
-func (p *PriceLevel) Parse() (float64, float64, error) {
-	price, err := strconv.ParseFloat(p.Price, 64)
+func (p *PriceLevel) Parse() (price, quantity float64, err error) {
+	price, err = strconv.ParseFloat(p.Price, 64)
 	if err != nil {
 		return 0, 0, err
 	}
-	quantity, err := strconv.ParseFloat(p.Quantity, 64)
+	quantity, err = strconv.ParseFloat(p.Quantity, 64)
 	if err != nil {
 		return price, 0, err
 	}
@@ -61,19 +61,19 @@ type WsPartialDepthEvent struct {
 type WsPartialDepthHandler func(event *WsPartialDepthEvent)
 
 // WsPartialDepthServe serve websocket partial depth handler with a symbol, using 1sec updates
-func (c *WebsocketStreamClient) WsPartialDepthServe(symbol string, levels string, handler WsPartialDepthHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
+func (c *WebsocketStreamClient) WsPartialDepthServe(symbol, levels string, handler WsPartialDepthHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
 	endpoint := fmt.Sprintf("%s/%s@depth%s", c.Endpoint, strings.ToLower(symbol), levels)
 	return wsPartialDepthServe(endpoint, symbol, handler, errHandler)
 }
 
 // WsPartialDepthServe100Ms serve websocket partial depth handler with a symbol, using 100msec updates
-func (c *WebsocketStreamClient) WsPartialDepthServe100Ms(symbol string, levels string, handler WsPartialDepthHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
+func (c *WebsocketStreamClient) WsPartialDepthServe100Ms(symbol, levels string, handler WsPartialDepthHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
 	endpoint := fmt.Sprintf("%s/%s@depth%s@100ms", c.Endpoint, strings.ToLower(symbol), levels)
 	return wsPartialDepthServe(endpoint, symbol, handler, errHandler)
 }
 
 // WsPartialDepthServe serve websocket partial depth handler with a symbol
-func wsPartialDepthServe(endpoint string, symbol string, handler WsPartialDepthHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
+func wsPartialDepthServe(endpoint, symbol string, handler WsPartialDepthHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
 	cfg := newWsConfig(endpoint)
 	wsHandler := func(message []byte) {
 		j, err := newJSON(message)
@@ -139,7 +139,6 @@ func (c *WebsocketStreamClient) WsCombinedPartialDepthServe(symbolLevels map[str
 		asksLen := len(data["asks"].([]interface{}))
 		event.Asks = make([]Ask, asksLen)
 		for i := 0; i < asksLen; i++ {
-
 			item := data["asks"].([]interface{})[i].([]interface{})
 			event.Asks[i] = Ask{
 				Price:    item[0].(string),
@@ -262,7 +261,6 @@ func wsCombinedDepthServe(endpoint string, handler WsDepthHandler, errHandler Er
 		asksLen := len(data["a"].([]interface{}))
 		event.Asks = make([]Ask, asksLen)
 		for i := 0; i < asksLen; i++ {
-
 			item := data["a"].([]interface{})[i].([]interface{})
 			event.Asks[i] = Ask{
 				Price:    item[0].(string),
@@ -313,7 +311,7 @@ func (c *WebsocketStreamClient) WsCombinedKlineServe(symbolIntervalPair map[stri
 }
 
 // WsKlineServe serve websocket kline handler with a symbol and interval like 15m, 30s
-func (c *WebsocketStreamClient) WsKlineServe(symbol string, interval string, handler WsKlineHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
+func (c *WebsocketStreamClient) WsKlineServe(symbol, interval string, handler WsKlineHandler, errHandler ErrHandler) (doneCh, stopCh chan struct{}, err error) {
 	endpoint := fmt.Sprintf("%s/%s@kline_%s", c.Endpoint, strings.ToLower(symbol), interval)
 	cfg := newWsConfig(endpoint)
 	wsHandler := func(message []byte) {
@@ -544,7 +542,7 @@ type WsOrderUpdate struct {
 	LatestQuoteVolume       string          `json:"Y"` // the quote volume for the latest trade
 	QuoteVolume             string          `json:"Q"`
 	TrailingTime            int64           `json:"D"` // Trailing Time
-	StrategyId              int64           `json:"j"` // Strategy ID
+	StrategyID              int64           `json:"j"` // Strategy ID
 	StrategyType            int64           `json:"J"` // Strategy Type
 	WorkingTime             int64           `json:"W"` // Working Time
 	SelfTradePreventionMode string          `json:"V"`

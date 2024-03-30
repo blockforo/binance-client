@@ -10,6 +10,8 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+const testEmail = "test@example.com"
+
 type subAccountTestSuite struct {
 	baseTestSuite
 }
@@ -143,8 +145,8 @@ func (s *subAccountTestSuite) assertInternalUniversalTransferEqual(e, a *Interna
 }
 
 func (s *subAccountTestSuite) TestCreateSubAccount() {
-	expectedEmail := "test@example.com"
-	data := []byte(fmt.Sprintf(`{"email": "%s"}`, expectedEmail))
+	expectedEmail := testEmail
+	data := []byte(fmt.Sprintf(`{"email": %q}`, expectedEmail))
 
 	s.mockDo(data, nil)
 	defer s.assertDo()
@@ -197,8 +199,8 @@ func (s *subAccountTestSuite) TestDepositAssetsIntoTheManagedSubAccount() {
 	s.mockDo(data, nil)
 	defer s.assertDo()
 
-	toEmail := "test@example.com"
-	asset := "BTC"
+	toEmail := testEmail
+	asset := BTC
 	amount := 1.0
 
 	resp, err := s.client.NewDepositAssetsIntoManagedSubAccountService().
@@ -245,7 +247,7 @@ func (s *marginTestSuite) TestEnableLeverageTokenForSubAccount() {
 }
 
 func (s *marginTestSuite) TestEnableMarginForSubAccount() {
-	email := "test@example.com"
+	email := testEmail
 	expectedResp := &EnableMarginForSubAccountResp{
 		Email:           email,
 		IsMarginEnabled: true,
@@ -270,7 +272,7 @@ func (s *subAccountTestSuite) TestFuturesTransferForSubAccount() {
 	defer s.assertDo()
 
 	email := "example@binance.com"
-	asset := "BTC"
+	asset := BTC
 	amount := 1.0
 	transferType := 2
 
@@ -328,7 +330,7 @@ func (s *subAccountTestSuite) TestGetDetailOnSubAccountFuturesAccount() {
 	s.Equal("user@example.com", resp.Email)
 	s.Equal("BNB", resp.Asset)
 	s.Len(resp.Assets, 1)
-	s.Equal("BTC", resp.Assets[0].Asset)
+	s.Equal(BTC, resp.Assets[0].Asset)
 	s.Equal("0.001", resp.Assets[0].InitialMargin)
 	s.Equal("0.001", resp.Assets[0].MaintenanceMargin)
 	s.Equal("0.001", resp.Assets[0].MarginBalance)
@@ -391,7 +393,7 @@ func (s *subAccountTestSuite) TestGetDetailOnSubAccountFuturesAccountV2() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewGetDetailOnSubAccountFuturesAccountV2Service().
-		Email("test@example.com").
+		Email(testEmail).
 		FuturesType(1).
 		Do(context.Background())
 
@@ -452,11 +454,11 @@ func (s *subAccountTestSuite) TestGetDetailOnSubAccountMarginAccount() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewGetDetailOnSubAccountMarginAccountService().
-		Email("test@example.com").
+		Email(testEmail).
 		Do(context.Background())
 
 	s.r().NoError(err)
-	s.Equal("test@example.com", resp.Email)
+	s.Equal(testEmail, resp.Email)
 	s.Equal("1.00000000", resp.MarginLevel)
 	s.Equal("0.10000000", resp.TotalAssetOfBtc)
 	s.Equal("0.00000000", resp.TotalLiabilityOfBtc)
@@ -465,7 +467,7 @@ func (s *subAccountTestSuite) TestGetDetailOnSubAccountMarginAccount() {
 	s.Equal("1.00000000", resp.MarginTradeCoeffVo.MarginCallBar)
 	s.Equal("1.00000000", resp.MarginTradeCoeffVo.NormalBar)
 	s.Len(resp.MarginUserAssetVoList, 1)
-	s.Equal("BTC", resp.MarginUserAssetVoList[0].Asset)
+	s.Equal(BTC, resp.MarginUserAssetVoList[0].Asset)
 	s.Equal("0.00000000", resp.MarginUserAssetVoList[0].Borrowed)
 	s.Equal("0.10000000", resp.MarginUserAssetVoList[0].Free)
 	s.Equal("0.00000000", resp.MarginUserAssetVoList[0].Interest)
@@ -524,7 +526,7 @@ func (s *subAccountTestSuite) TestGetFuturesPositionRiskOfSubAccountV2() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewGetFuturesPositionRiskOfSubAccountV2Service().
-		Email("test@example.com").
+		Email(testEmail).
 		FuturesType(1).
 		Do(context.Background())
 
@@ -599,7 +601,7 @@ func (s *subAccountTestSuite) TestGetSubAccountDepositHistory() {
 
 	resp, err := s.client.NewGetSubAccountDepositHistoryService().
 		Email("test@test.com").
-		Coin("BTC").
+		Coin(BTC).
 		Status(1).
 		StartTime(1613450271000).
 		EndTime(1613536671000).
@@ -611,7 +613,7 @@ func (s *subAccountTestSuite) TestGetSubAccountDepositHistory() {
 	s.Len(resp.DepositList, 1)
 	s.Equal(int64(123), resp.DepositList[0].Id)
 	s.Equal("1.00000000", resp.DepositList[0].Amount)
-	s.Equal("BTC", resp.DepositList[0].Coin)
+	s.Equal(BTC, resp.DepositList[0].Coin)
 	s.Equal("", resp.DepositList[0].Network)
 	s.Equal(int64(1), resp.DepositList[0].Status)
 	s.Equal("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa", resp.DepositList[0].Address)
@@ -694,7 +696,7 @@ func (s *subAccountTestSuite) TestGetSummaryOfSubAccountFuturesAccount() {
 	s.Equal("1.00000000", resp.TotalPositionInitialMargin)
 	s.Equal("1.00000000", resp.TotalUnrealizedProfit)
 	s.Equal("1.00000000", resp.TotalWalletBalance)
-	s.Equal("BTC", resp.Asset)
+	s.Equal(BTC, resp.Asset)
 	s.Len(resp.SubAccountList, 1)
 	s.Equal("example@example.com", resp.SubAccountList[0].Email)
 	s.Equal("1.00000000", resp.SubAccountList[0].TotalInitialMargin)
@@ -704,7 +706,7 @@ func (s *subAccountTestSuite) TestGetSummaryOfSubAccountFuturesAccount() {
 	s.Equal("1.00000000", resp.SubAccountList[0].TotalPositionInitialMargin)
 	s.Equal("1.00000000", resp.SubAccountList[0].TotalUnrealizedProfit)
 	s.Equal("1.00000000", resp.SubAccountList[0].TotalWalletBalance)
-	s.Equal("BTC", resp.SubAccountList[0].Asset)
+	s.Equal(BTC, resp.SubAccountList[0].Asset)
 }
 
 func (s *subAccountTestSuite) TestGetSummaryOfSubAccountFuturesAccountV2() {
@@ -764,7 +766,7 @@ func (s *subAccountTestSuite) TestGetSummaryOfSubAccountFuturesAccountV2() {
 	s.Equal("75.00000000", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.TotalPositionInitialMargin)
 	s.Equal("10.00000000", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.TotalUnrealizedProfit)
 	s.Equal("160.00000000", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.TotalWalletBalance)
-	s.Equal("BTC", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.Asset)
+	s.Equal(BTC, resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.Asset)
 	s.Len(resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList, 2)
 	s.Equal("test1@test.com", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList[0].Email)
 	s.Equal("50.00000000", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList[0].TotalInitialMargin)
@@ -774,7 +776,7 @@ func (s *subAccountTestSuite) TestGetSummaryOfSubAccountFuturesAccountV2() {
 	s.Equal("45.00000000", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList[0].TotalPositionInitialMargin)
 	s.Equal("5.00000000", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList[0].TotalUnrealizedProfit)
 	s.Equal("80.00000000", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList[0].TotalWalletBalance)
-	s.Equal("BTC", resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList[0].Asset)
+	s.Equal(BTC, resp.(*GetSummaryOfSubAccountFuturesAccountV2USDTResp).FutureAccountSummaryResp.SubAccountList[0].Asset)
 }
 
 func (s *marginTestSuite) TestGetSummaryOfSubAccountMarginAccount() {
@@ -806,7 +808,7 @@ func (s *marginTestSuite) TestGetSummaryOfSubAccountMarginAccount() {
 	s.Equal("0.05000000", resp.TotalLiabilityOfBtc)
 	s.Equal("0.05000000", resp.TotalNetAssetOfBtc)
 	s.Len(resp.SubAccountList, 1)
-	s.Equal("test@example.com", resp.SubAccountList[0].Email)
+	s.Equal(testEmail, resp.SubAccountList[0].Email)
 	s.Equal("0.05000000", resp.SubAccountList[0].TotalAssetOfBtc)
 	s.Equal("0.00000000", resp.SubAccountList[0].TotalLiabilityOfBtc)
 	s.Equal("0.05000000", resp.SubAccountList[0].TotalNetAssetOfBtc)
@@ -823,8 +825,8 @@ func (s *subAccountTestSuite) TestMarginTransferForSubAccount() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewMarginTransferForSubAccountService().
-		Email("test@example.com").
-		Asset("BTC").
+		Email(testEmail).
+		Asset(BTC).
 		Amount(1.23).
 		TransferType(1).
 		Do(context.Background())
@@ -861,12 +863,12 @@ func (s *subAccountTestSuite) TestQueryManagedSubAccountAssetDetails() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewQueryManagedSubAccountAssetDetailsService().
-		Email("test@example.com").
+		Email(testEmail).
 		Do(context.Background())
 
 	s.r().NoError(err)
 	s.Len(resp.AssetDetail, 2)
-	s.Equal("BTC", resp.AssetDetail[0].Coin)
+	s.Equal(BTC, resp.AssetDetail[0].Coin)
 	s.Equal("Bitcoin", resp.AssetDetail[0].Name)
 	s.Equal("1.00000000", resp.AssetDetail[0].TotalBalance)
 	s.Equal("0.50000000", resp.AssetDetail[0].AvailableBalance)
@@ -906,7 +908,7 @@ func (s *subAccountTestSuite) TestQueryManagedSubAccountList() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewQueryManagedSubAccountList().
-		Email("test@example.com").
+		Email(testEmail).
 		Page(1).
 		Limit(500).
 		Do(context.Background())
@@ -917,7 +919,7 @@ func (s *subAccountTestSuite) TestQueryManagedSubAccountList() {
 	s.Equal(123456, resp.ManagerSubUserInfoVoList[0].RootUserId)
 	s.Equal(789012, resp.ManagerSubUserInfoVoList[0].ManagersubUserId)
 	s.Equal(345678, resp.ManagerSubUserInfoVoList[0].BindParentUserId)
-	s.Equal("test@example.com", resp.ManagerSubUserInfoVoList[0].Email)
+	s.Equal(testEmail, resp.ManagerSubUserInfoVoList[0].Email)
 	s.Equal(uint64(1613450271000), resp.ManagerSubUserInfoVoList[0].InsertTimestamp)
 	s.Equal("parent@example.com", resp.ManagerSubUserInfoVoList[0].BindParentEmail)
 	s.True(resp.ManagerSubUserInfoVoList[0].IsSubUserEnabled)
@@ -959,7 +961,7 @@ func (s *accountTestSuite) TestQueryManagedSubAccountMarginAssetDetails() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewQueryManagedSubAccountMarginAssetDetailsService().
-		Email("test@example.com").
+		Email(testEmail).
 		Do(context.Background())
 
 	s.r().NoError(err)
@@ -968,7 +970,7 @@ func (s *accountTestSuite) TestQueryManagedSubAccountMarginAssetDetails() {
 	s.Equal("0.00000000", resp.TotalLiabilityOfBtc)
 	s.Equal("1.00000000", resp.TotalNetAssetOfBtc)
 	s.Len(resp.UserAssets, 2)
-	s.Equal("BTC", resp.UserAssets[0].Asset)
+	s.Equal(BTC, resp.UserAssets[0].Asset)
 	s.Equal("0.00000000", resp.UserAssets[0].Borrowed)
 	s.Equal("1.00000000", resp.UserAssets[0].Free)
 	s.Equal("0.00000000", resp.UserAssets[0].Interest)
@@ -1030,7 +1032,7 @@ func (s *subAccountTestSuite) TestQueryManagedSubAccountSnapshotService() {
 	s.Len(resp.SnapshotVos, 1)
 	s.Len(resp.SnapshotVos[0].Data, 1)
 	s.Len(resp.SnapshotVos[0].Data[0].Balances, 2)
-	s.Equal("BTC", resp.SnapshotVos[0].Data[0].Balances[0].Asset)
+	s.Equal(BTC, resp.SnapshotVos[0].Data[0].Balances[0].Asset)
 	s.Equal("0.1", resp.SnapshotVos[0].Data[0].Balances[0].Free)
 	s.Equal("0.2", resp.SnapshotVos[0].Data[0].Balances[0].Locked)
 	s.Equal("ETH", resp.SnapshotVos[0].Data[0].Balances[1].Asset)
@@ -1080,7 +1082,7 @@ func (s *subAccountTestSuite) TestQueryManagedSubAccountTransferLogService() {
 	s.Equal("SPOT", resp.ManagerSubTransferHistoryVos[0].FromAccountType)
 	s.Equal("baz@qux.com", resp.ManagerSubTransferHistoryVos[0].ToEmail)
 	s.Equal("MARGIN", resp.ManagerSubTransferHistoryVos[0].ToAccountType)
-	s.Equal("BTC", resp.ManagerSubTransferHistoryVos[0].Asset)
+	s.Equal(BTC, resp.ManagerSubTransferHistoryVos[0].Asset)
 	s.Equal(100000000, resp.ManagerSubTransferHistoryVos[0].Amount)
 	s.Equal(0, resp.ManagerSubTransferHistoryVos[0].ScheduledData)
 	s.Equal(uint64(1613450271000), resp.ManagerSubTransferHistoryVos[0].CreateTime)
@@ -1126,7 +1128,7 @@ func (s *subAccountTestSuite) TestQueryManagedSubAccountTransferLogForTradingTea
 	s.Equal("SPOT", resp.ManagerSubTransferHistoryVos[0].FromAccountType)
 	s.Equal("test2@test.com", resp.ManagerSubTransferHistoryVos[0].ToEmail)
 	s.Equal("MARGIN", resp.ManagerSubTransferHistoryVos[0].ToAccountType)
-	s.Equal("BTC", resp.ManagerSubTransferHistoryVos[0].Asset)
+	s.Equal(BTC, resp.ManagerSubTransferHistoryVos[0].Asset)
 	s.Equal("1.00000000", resp.ManagerSubTransferHistoryVos[0].Amount)
 	s.Equal(int64(1613450271000), resp.ManagerSubTransferHistoryVos[0].ScheduledData)
 	s.Equal(uint64(1613450271000), resp.ManagerSubTransferHistoryVos[0].CreateTime)
@@ -1156,7 +1158,7 @@ func (s *subAccountTestSuite) TestQuerySubAccountAssets() {
 		Locked string
 	}{
 		{
-			Asset:  "BTC",
+			Asset:  BTC,
 			Free:   "0.1",
 			Locked: "0.2",
 		},
@@ -1171,7 +1173,7 @@ func (s *subAccountTestSuite) TestQuerySubAccountAssets() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewQuerySubAccountAssetsService().
-		Email("test@example.com").
+		Email(testEmail).
 		Do(context.Background())
 
 	s.r().NoError(err)
@@ -1208,7 +1210,7 @@ func (s *subAccountTestSuite) TestQuerySubAccountAssetsForMasterAccount() {
 			Locked string `json:"locked"`
 		}{
 			{
-				Asset:  "BTC",
+				Asset:  BTC,
 				Free:   "0.005",
 				Locked: "0.005",
 			},
@@ -1262,7 +1264,7 @@ func (s *subAccountTestSuite) TestQuerySubAccountSpotAssetsSummary() {
 	s.Equal("1.2345", resp.MasterAccountTotalAsset)
 	s.Len(resp.SpotSubUserAssetBtcVoList, 2)
 	s.Equal("user1@example.com", resp.SpotSubUserAssetBtcVoList[0].Email)
-	s.Equal("BTC", resp.SpotSubUserAssetBtcVoList[0].ToAsset)
+	s.Equal(BTC, resp.SpotSubUserAssetBtcVoList[0].ToAsset)
 	s.Equal("user2@example.com", resp.SpotSubUserAssetBtcVoList[1].Email)
 	s.Equal("ETH", resp.SpotSubUserAssetBtcVoList[1].ToAsset)
 }
@@ -1325,7 +1327,7 @@ func (s *subAccountTestSuite) TestSubAccountFuturesAssetTransfer() {
 		FromEmail("from@test.com").
 		ToEmail("to@test.com").
 		FuturesType(1).
-		Asset("BTC").
+		Asset(BTC).
 		Amount(1.23).
 		Do(context.Background())
 
@@ -1356,7 +1358,7 @@ func (s *subAccountTestSuite) TestQuerySubAccountFuturesAssetTransferHistory() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewQuerySubAccountFuturesAssetTransferHistoryService().
-		Email("test@example.com").
+		Email(testEmail).
 		FuturesType(1).
 		StartTime(1613450271000).
 		EndTime(1613536671000).
@@ -1370,7 +1372,7 @@ func (s *subAccountTestSuite) TestQuerySubAccountFuturesAssetTransferHistory() {
 	s.Len(resp.Transfers, 1)
 	s.Equal("xxx", resp.Transfers[0].From)
 	s.Equal("yyy", resp.Transfers[0].To)
-	s.Equal("BTC", resp.Transfers[0].Asset)
+	s.Equal(BTC, resp.Transfers[0].Asset)
 	s.Equal("0.5", resp.Transfers[0].Qty)
 	s.Equal(int64(123), resp.Transfers[0].TranId)
 	s.Equal(uint64(1613450271000), resp.Transfers[0].Time)
@@ -1455,7 +1457,7 @@ func (s *subAccountTestSuite) TestQuerySubAccountSpotAssetTransferHistory() {
 	s.Len(resp.Rows, 1)
 	s.Equal("email1@example.com", resp.Rows[0].From)
 	s.Equal("email2@example.com", resp.Rows[0].To)
-	s.Equal("BTC", resp.Rows[0].Asset)
+	s.Equal(BTC, resp.Rows[0].Asset)
 	s.Equal("1.00000000", resp.Rows[0].Qty)
 	s.Equal("CONFIRMED", resp.Rows[0].Status)
 	s.Equal(int64(123456789), resp.Rows[0].TranId)
@@ -1469,7 +1471,7 @@ func (s *subAccountTestSuite) TestTransferToMaster() {
 	defer s.assertDo()
 
 	resp, err := s.client.NewTransferToMasterService().
-		Asset("BTC").
+		Asset(BTC).
 		Amount(1.0).
 		Do(context.Background())
 
@@ -1495,7 +1497,7 @@ func (s *subAccountTestSuite) TestDo() {
 		ToEmail("example2@gmail.com").
 		ClientTranId("123abc").
 		Symbol("BTCUSDT").
-		Asset("BTC").
+		Asset(BTC).
 		Amount(1.0).
 		Do(context.Background())
 
@@ -1546,7 +1548,7 @@ func (s *subAccountTestSuite) TestWithdrawAssetsFromTheManagedSubAccount() {
 
 	resp, err := s.client.NewWithdrawAssetsFromTheManagedSubAccountService().
 		FromEmail("user@example.com").
-		Asset("BTC").
+		Asset(BTC).
 		Amount(1.0).
 		TransferDate(1617220000).
 		Do(context.Background())

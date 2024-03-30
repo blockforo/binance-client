@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func AutoConvertStableCoin() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// AutoConvertStableCoinService - /sapi/v1/capital/contract/convertible-coins
 	autoConvertStableCoin, err := client.NewAutoConvertStableCoinService().Do(context.Background())
@@ -24,5 +24,5 @@ func AutoConvertStableCoin() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(autoConvertStableCoin))
+	fmt.Println(binance.PrettyPrint(autoConvertStableCoin))
 }

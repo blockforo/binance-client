@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func CrossMarginAccountDetail() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// CrossMarginAccountDetailService - /sapi/v1/margin/account
 	crossMarginAccountDetail, err := client.NewCrossMarginAccountDetailService().Do(context.Background())
@@ -24,5 +24,5 @@ func CrossMarginAccountDetail() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(crossMarginAccountDetail))
+	fmt.Println(binance.PrettyPrint(crossMarginAccountDetail))
 }

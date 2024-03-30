@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func GetDetailOnSubAccountFuturesAccount() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Get Detail on Sub-account's Futures Account (For Master Account) - /sapi/v1/sub-account/futures/account
 	getDetailOnSubAccountFuturesAccount, err := client.NewGetDetailOnSubAccountFuturesAccountService().Email("from@email.com").
@@ -25,5 +25,5 @@ func GetDetailOnSubAccountFuturesAccount() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(getDetailOnSubAccountFuturesAccount))
+	fmt.Println(binance.PrettyPrint(getDetailOnSubAccountFuturesAccount))
 }

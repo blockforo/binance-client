@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	binance_connector "github.com/binance/binance-connector-go"
+	binance "github.com/blockforo/binance-client"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func CancelReplace() {
 	secretKey := "your secret key"
 	baseURL := "https://api.binance.com"
 
-	client := binance_connector.NewClient(apiKey, secretKey, baseURL)
+	client := binance.NewClient(apiKey, secretKey, baseURL)
 
 	// Cancel an Existing Order and Send a New Order (TRADE) - POST /api/v3/order/cancelReplace
 	cancelReplace, err := client.NewCancelReplaceService().
@@ -26,5 +26,5 @@ func CancelReplace() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(binance_connector.PrettyPrint(cancelReplace))
+	fmt.Println(binance.PrettyPrint(cancelReplace))
 }
