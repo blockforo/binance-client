@@ -734,14 +734,14 @@ func (s *TickerPrice) Do(ctx context.Context, opts ...RequestOption) ([]*TickerP
 		secType:  secTypeNone,
 	}
 	// Binance returns a single object in case of 1 symbol
-	isArrayResponse := false
+	isArrayResponse := true
 	if s.symbol != nil {
+		isArrayResponse = false
 		r.setParam("symbol", *s.symbol)
 	}
 
 	// otherwise returns an array
 	if s.symbols != nil {
-		isArrayResponse = true
 		r.setParam("symbols", *s.symbols)
 	}
 
