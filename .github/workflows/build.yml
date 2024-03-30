@@ -32,7 +32,7 @@ jobs:
 
     # Run go ci lint to catch standard go issues
     - name: golangci-lint
-      uses: golangci/golangci-lint-action@v3
+      uses: golangci/golangci-lint-action@v4
       with:          
         args: --issues-exit-code=0
         skip-pkg-cache: true
