@@ -671,7 +671,7 @@ func (s *walletTestSuite) TestDustLog() {
 	s.Equal(int64(123), resp.UserAssetDribblets[0].UserAssetDribbletDetails[0].TransId)
 	s.Equal("0.00000010", resp.UserAssetDribblets[0].UserAssetDribbletDetails[0].ServiceChargeAmount)
 	s.Equal("0.00050000", resp.UserAssetDribblets[0].UserAssetDribbletDetails[0].Amount)
-	s.Equal(1613450271000, resp.UserAssetDribblets[0].UserAssetDribbletDetails[0].OperateTime)
+	s.Equal(uint64(1613450271000), resp.UserAssetDribblets[0].UserAssetDribbletDetails[0].OperateTime)
 	s.Equal("0.00049000", resp.UserAssetDribblets[0].UserAssetDribbletDetails[0].TransferedAmount)
 	s.Equal("BTC", resp.UserAssetDribblets[0].UserAssetDribbletDetails[0].FromAsset)
 	s.Equal(int64(123), resp.UserAssetDribblets[0].UserAssetDribbletDetails[1].TransId)
